@@ -1,0 +1,22 @@
+# depslib dependency file v1.0
+1730256679 source:c:\users\herna\onedrive\escritorio\uni\carrera\programacion\tp_final\escalera\funcion.cpp
+	<iostream>
+
+1730275427 source:c:\users\herna\onedrive\escritorio\uni\carrera\programacion\tp_final\escalera\main.cpp
+	<iostream>
+	<ctime>
+
+1571584339 c:\users\herna\onedrive\escritorio\uni\carrera\programacion\tp_final\escalera\rlutil.h
+	<iostream>
+	<string>
+	<cstdio>
+	<stdio.h>
+	<string.h>
+	<windows.h>
+	<conio.h>
+	<termios.h>
+	<unistd.h>
+	<sys/ioctl.h>
+	<sys/types.h>
+	<sys/time.h>
+
