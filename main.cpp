@@ -36,7 +36,7 @@ int calcPuntaje(const int vDado[]){ //cuenta cada numero y calcula puntaje
 //cuenta cantidad x dado y suma al total
 for(int i=0; i < 6; i++){
     conteo[vDado[i]]++;
-    sumaTotal += vDado[i]
+    sumaTotal += vDado[i];
     }
 //comprobar sexteto(6 iguales)
 for(int i=1; i <= 6; i++){
@@ -49,14 +49,13 @@ for(int i=1; i <= 6; i++){
     }
 
 //calcular escalera
-bool esEscalera = true;
-    for(int i=1; i <= 6; i++){//bucle de 6
-        if (conteo[i] != 1){//comprueba si el conteo es = 1, si no es igual a 1, no habria exactamente un dado de ese numero o hay varios, seria falso.
-            esEscalera=false;
-            break;
+int numerosDif = 0;//contador para numeros diferentes
+    for(int i = 1; i <= 6; i ++){//bucle de 6
+        if(conteo[i] > 0){
+            numerosDif++;//contar cuantos num son diferentes
         }
     }
-    if(esEscalera){
+    if(numerosDif == 6){//si 6 son diferentes, es escalera
         return -1;//devulve escalera
     }
 
