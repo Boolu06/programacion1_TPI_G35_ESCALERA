@@ -28,8 +28,53 @@ void SeisDados(){
     }
 }
 
-//Funcion sumar? vector de 6 dados 3 veces (3 turnos)
+//Funcion sumar
+int calcPuntaje(const int vDado[]){ //cuenta cada numero y calcula puntaje
+    int conteo[7] = {0};//conteo 1 a 6
+    int sumaTotal = 0; // acumulador
 
+//cuenta cantidad x dado y suma al total
+for(int i=0; i < 6; i++){
+    conteo[vDado[i]]++;
+    sumaTotal += vDado[i]
+    }
+//comprobar sexteto(6 iguales)
+for(int i=1; i <= 6; i++){
+    if(conteo[i] == 6)
+        if(i == 6){
+            return 0;//si el sexteto son todos 6, devuelve 0
+        }else{
+        return i*10;//sino, multiplica x10 el puntaje del sexteto
+        }
+    }
+
+//calcular escalera
+bool esEscalera = true;
+    for(int i=1; i <= 6; i++){//bucle de 6
+        if (conteo[i] != 1){//comprueba si el conteo es = 1, si no es igual a 1, no habria exactamente un dado de ese numero o hay varios, seria falso.
+            esEscalera=false;
+            break;
+        }
+    }
+    if(esEscalera){
+        return -1;//devulve escalera
+    }
+
+    //si no se cumple ninguna de estas, devolver valor final
+    return sumaTotal;
+}
+//puntaje
+int puntaje = calcPuntaje(vDado);
+
+if(puntaje = -1){// si el return es -1 seria escalera
+    cout<<"Escalera"<<endl;
+}else if (puntaje = 0){//si el return es 0, es un sexteto de 6.
+    cout<<"sexteto de 6. Puntaje a 0"<<endl;
+}else if (puntaje % 10 == 0 && !=0 ){//si el puntaje es multiplo de 10 y es distinto de 0
+    cout<<"sexteto de"<< puntaje/10<<":"<< puntaje << "puntos."<<endl;// puntaje/10 para calcular que numero salio para el sexteto
+}else{
+    cout<<"suma de dados: "<< puntaje << "puntos" <<endl;//suma de puntos default
+}
 
 //Funcion de ronda
 //int Ronda()
@@ -110,3 +155,4 @@ int main(){
     }
     }while(opcion!=0);
 }
+
