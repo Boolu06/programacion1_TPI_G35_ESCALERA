@@ -21,28 +21,17 @@ using namespace std;
 
 //Funcion para ingresar los nombres de los jugadores.
 string nombreJugador(int opcion){
-    string vNombre[2];
-    string nombreJugador1;
-    string nombreJugador2;
+    string nombreJugador;
 
     if(opcion == 1){
         system("cls");
-        cout<<"Ingrese el nombre del jugador 1"<<endl;
-        cin>>nombreJugador1;
-        vNombre[0]={nombreJugador1};
-        return vNombre[1];
-    }
-
-    else if(opcion == 2){
-        system("cls");
-        cout<<"Ingrese el nombre del jugador 1"<<endl;
-        cin>>nombreJugador1;
-        vNombre[0]={nombreJugador1};
-        system("cls");
-        cout<<"Ingrese el nombre del jugador 2"<<endl;
-        cin>>nombreJugador2;
-        vNombre[1]={nombreJugador2};
-        return vNombre[1,2];
+        rlutil::saveDefaultColor();
+        rlutil::setBackgroundColor(rlutil::WHITE);
+        rlutil::setColor(rlutil::BLACK);
+        rlutil::locate(50,11);cout<<"===Ingrese el nombre del jugador 1==="<<endl;
+        rlutil::resetColor();
+        rlutil::locate(54,12);cin>>nombreJugador;
+        return nombreJugador;
     }
 }
 
@@ -51,17 +40,23 @@ void ModoJuego(){
     system("cls");
     int opcionModo;
     do{
-        cout<<"===Elija el modo de juego==="<<endl;
-        cout<<"1. Un solo jugador"<<endl;
-        cout<<"2. Dos jugadores"<<endl;
-        //cout<<"3. MODO SIMULACION"<<endl;
+        rlutil::saveDefaultColor();
+        rlutil::setBackgroundColor(rlutil::WHITE);
+        rlutil::setColor(rlutil::BLACK);
+        rlutil::locate(53,11);cout<<"===Elija el modo de juego==="<<endl;
+        rlutil::resetColor();
+        rlutil::locate(54,12);cout<<"1. Un solo jugador"<<endl;
+        //cout<<"2. MODO SIMULACION"<<endl;
 
-        cin>>opcionModo;
+        rlutil::locate(54,13);cin>>opcionModo;
 
         switch(opcionModo){
             case 1:
-                nombreJugador(opcionModo);
-                // Aca deberia ir la funcion Jugar(vNombre) pero no funciona.
+                {
+                string Nombre = nombreJugador(opcionModo);
+                system("cls");
+                Jugar(Nombre);
+                }
             break;
 
             default:

@@ -54,19 +54,39 @@ void Jugar(string& nombreJugador1){
     int LanzamientoCont=0;
     const int TAM=6;
     int vDado[TAM]={};
+    int PuntajeTotal=0;
 
-    calcPuntaje(vDado, TAM);
+    do{
+        PuntajeTotal+=calcPuntaje(vDado, TAM);
+        //Imprime por pantalla la interfaz de la ronda
+        rlutil::hidecursor;
 
-    //Imprime por pantalla la interfaz de la ronda
-    cout<<"TURNO DE "<<nombreJugador1;
-    cout<<"| RONDA N° "<<RondaCont;
-    cout<<"| PUNTAJE TOTAL: "<<"XD"<<endl;
-    cout<<"------------------------------------"<<endl;
-    cout<<"MAXIMO PUNTAJE DE LA RONDA:";
-    cout<<"LANZAMIENTO N° "<<LanzamientoCont;
-    cout<<"------------------------------------"<<endl;
-    //Aca iria una funcion para dibujar los dados;
+        cout<<"TURNO DE "<<nombreJugador1;
+        cout<<"| RONDA NUMERO "<<RondaCont;
+        cout<<"| PUNTAJE TOTAL: "<<PuntajeTotal<<endl;
+        cout<<"------------------------------------"<<endl;
+        cout<<"MAXIMO PUNTAJE DE LA RONDA: "<<"XD"<<endl;
+        cout<<"LANZAMIENTO NUMERO: "<<LanzamientoCont<<endl;
+        cout<<"------------------------------------"<<endl;
+        cout<<" "<<endl;
 
+        mostrarVector(vDado,TAM); //Muestra los dados
+        //Aca iria una funcion para dibujar los dados?
+        //MOMO FUNCIONA TODO HASTA AHORA SE FESTEJA EN EL OBELISCO
+
+        cout<<endl;
+        system("pause");
+    }
+    while(PuntajeTotal<100);
+    system("cls");
+}
+
+//Funcion MostrarVectorDado
+void mostrarVector(int vDado[], int TAM){
+    int i;
+    for(i=0;i<TAM;i++){
+        cout<<vDado[i]<<"\t";
+    }
 }
 
 //Funcion calcular puntaje

@@ -10,15 +10,18 @@ using namespace std;
 
 int main(){
     srand(time(0)); // Establece la semilla para numeros random
-    rlutil::setColor(rlutil::LIGHTGREEN);
+    rlutil::saveDefaultColor();
     int opcion;
 
     do{
-        cout<<"===JUEGO DE LA ESCALERA==="<<endl;
-        cout<<"1. Jugar"<<endl;
-        cout<<"2. Puntuacion Maxima"<<endl;
-        cout<<"0. Salir del juego"<<endl;
-        cin>>opcion;
+        rlutil::setColor(rlutil::BLACK);
+        rlutil::setBackgroundColor(rlutil::WHITE);
+        rlutil::locate(54,11); cout<<"===JUEGO DE LA ESCALERA==="<<endl;
+        rlutil::resetColor();
+        rlutil::locate(54,12); cout<<"1. Jugar"<<endl;
+        rlutil::locate(54,13); cout<<"2. Puntuacion Maxima"<<endl;
+        rlutil::locate(54,14); cout<<"0. Salir del juego"<<endl;
+        rlutil::locate(54,15);cin>>opcion;
 
         switch(opcion){
             case 1:
