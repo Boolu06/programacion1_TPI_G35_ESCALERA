@@ -50,7 +50,7 @@ void ModoJuego(){
         rlutil::locate(54,12);cout<<"1. Un solo jugador"<<endl;
         rlutil::locate(54,13);cout<<"2. Modo Simulado"<<endl;
 
-        rlutil::locate(54,13);cin>>opcionModo;
+        rlutil::locate(54,14);cin>>opcionModo;
 
         switch(opcionModo){
             case 1:
