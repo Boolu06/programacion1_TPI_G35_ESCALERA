@@ -39,7 +39,7 @@ void ImprimirTurnos(int Ronda, string nombreJugador1, int puntaje){
 
     cout<<"RONDA NUMERO "<<Ronda;
     cout<<"PROXIMO TURNO: "<<nombreJugador1;
-    cout<<"PUNTAJE "<<nombreJugador1<<" : "<<puntaje;
+    cout<<"PUNTAJE "<<nombreJugador1<<" : "<< puntaje;
 
     for(int x2=1;x2<=80;x2++){
         rlutil::locate(x2,10);
@@ -49,7 +49,7 @@ void ImprimirTurnos(int Ronda, string nombreJugador1, int puntaje){
 
 //Funcion jugar
 
-void Jugar(string& nombreJugador1){
+void Jugar(string& nombreJugador1, bool modoSimulado){
     int RondaCont=0;
     int LanzamientoCont=0;
     const int TAM=6;
@@ -57,15 +57,24 @@ void Jugar(string& nombreJugador1){
     int PuntajeTotal=0;
 
     do{
-        PuntajeTotal+=calcPuntaje(vDado, TAM);
+        if(modoSimulado){
+            dadoManual(vDado, TAM);
+        }else{
+            for(int i=0;i<TAM;i++){
+            vDado[i]=tiradaDado(); // Vector de 6(TAM) componentes que contienen numeros random del 1 al 6
+            }
+        }
+
+
+        PuntajeTotal += calcPuntaje(vDado, TAM);
         //Imprime por pantalla la interfaz de la ronda
-        rlutil::hidecursor;
+        rlutil::hidecursor();
 
         cout<<"TURNO DE "<<nombreJugador1;
         cout<<"| RONDA NUMERO "<<RondaCont;
         cout<<"| PUNTAJE TOTAL: "<<PuntajeTotal<<endl;
         cout<<"------------------------------------"<<endl;
-        cout<<"MAXIMO PUNTAJE DE LA RONDA: "<<"XD"<<endl;
+        cout<<"MAXIMO PUNTAJE DE LA RONDA: " << "XD" <<endl;
         cout<<"LANZAMIENTO NUMERO: "<<LanzamientoCont<<endl;
         cout<<"------------------------------------"<<endl;
         cout<<" "<<endl;
@@ -94,11 +103,6 @@ int calcPuntaje(int vDado[],int TAM){ //cuenta cada numero y calcula puntaje
     int conteo[7] = {0};//conteo 1 a 6
     int sumaTotal = 0; // acumulador
     int puntaje=0; // Return de la funcion
-    int i;
-
-    for(i=0;i<TAM;i++){
-        vDado[i]=tiradaDado(); // Vector de 6(TAM) componentes que contienen numeros random del 1 al 6
-    }
 
     //Recorre el vector y suma el total de sus valores [i]
     for(int i=0;i<TAM; i++){
@@ -123,7 +127,16 @@ int calcPuntaje(int vDado[],int TAM){ //cuenta cada numero y calcula puntaje
         }
     }
     if(numerosDif == 6){//si 6 son diferentes, es escalera
-        return puntaje=-1;//devulve escalera
+        return puntaje =-1;//devulve escalera
     }
     return sumaTotal; //Si no se cumple ninguna de estas, devolver valor final
+}
+
+//funcion ingreso dado manual
+void dadoManual (int vDado[], int TAM){
+    cout<<"Ingrese los valores de los dados (1 - 6): "<< endl;
+    for(int i=0; i < TAM; i++){
+        cout<<"Dado: "<< i + 1 <<" : "<< endl;
+        cin>> vDado[i];
+    }
 }
