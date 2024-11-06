@@ -1,8 +1,9 @@
 #include<iostream>
 #include<ctime>
-#include "rlutil.h"
-#include "menu.h"
-#include "juego.h"
+#include"rlutil.h"
+#include"menu.h"
+#include"juego.h"
+#include"dados.h"
 
 using namespace std;
 
@@ -10,10 +11,10 @@ using namespace std;
 
 int main(){
     srand(time(0)); // Establece la semilla para numeros random
-    rlutil::saveDefaultColor();
     int opcion;
 
     do{
+        rlutil::saveDefaultColor();
         rlutil::setColor(rlutil::BLACK);
         rlutil::setBackgroundColor(rlutil::WHITE);
         rlutil::locate(54,11); cout<<"===JUEGO DE LA ESCALERA==="<<endl;

@@ -1,16 +1,11 @@
 #include<iostream>
 #include<ctime>
-#include"rlutil.h"
-#include"juego.h"
-#include"menu.h"
+#include "rlutil.h"
+#include "juego.h"
+#include "menu.h"
+#include "dados.h"
 
 using namespace std;
-
-//Funcion de tirada de dado
-int tiradaDado(){
-    return rand() % 6 + 1;
-}
-
 
 //Imprime el puntaje
 void ImprimirPuntaje(int puntaje){
@@ -57,6 +52,9 @@ void Jugar(string& nombreJugador1, bool modoSimulado){
     int PuntajeTotal=0;
 
     do{
+        system("cls");
+        rlutil::resetColor();
+
         if(modoSimulado){
             dadoManual(vDado, TAM);
         }else{
@@ -64,7 +62,6 @@ void Jugar(string& nombreJugador1, bool modoSimulado){
             vDado[i]=tiradaDado(); // Vector de 6(TAM) componentes que contienen numeros random del 1 al 6
             }
         }
-
 
         PuntajeTotal += calcPuntaje(vDado, TAM);
         //Imprime por pantalla la interfaz de la ronda
@@ -79,23 +76,14 @@ void Jugar(string& nombreJugador1, bool modoSimulado){
         cout<<"------------------------------------"<<endl;
         cout<<" "<<endl;
 
-        mostrarVector(vDado,TAM); //Muestra los dados
-        //Aca iria una funcion para dibujar los dados?
-        //MOMO FUNCIONA TODO HASTA AHORA SE FESTEJA EN EL OBELISCO
+        mostrarDado(vDado,TAM); //Muestra los dados
 
         cout<<endl;
-        system("pause");
+        rlutil::anykey();
+        rlutil::resetColor();
     }
     while(PuntajeTotal<100);
     system("cls");
-}
-
-//Funcion MostrarVectorDado
-void mostrarVector(int vDado[], int TAM){
-    int i;
-    for(i=0;i<TAM;i++){
-        cout<<vDado[i]<<"\t";
-    }
 }
 
 //Funcion calcular puntaje

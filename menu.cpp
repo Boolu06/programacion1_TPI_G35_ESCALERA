@@ -2,6 +2,7 @@
 #include"rlutil.h"
 #include"juego.h"
 #include"menu.h"
+#include"dados.h"
 
 using namespace std;
 
@@ -39,8 +40,9 @@ string nombreJugador(int opcion){
 void ModoJuego(){
     system("cls");
     int opcionModo;
+    rlutil::saveDefaultColor();
+
     do{
-        rlutil::saveDefaultColor();
         rlutil::setBackgroundColor(rlutil::WHITE);
         rlutil::setColor(rlutil::BLACK);
         rlutil::locate(53,11);cout<<"===Elija el modo de juego==="<<endl;
