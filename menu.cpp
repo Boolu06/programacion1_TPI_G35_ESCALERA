@@ -46,7 +46,7 @@ void ModoJuego(){
         rlutil::locate(53,11);cout<<"===Elija el modo de juego==="<<endl;
         rlutil::resetColor();
         rlutil::locate(54,12);cout<<"1. Un solo jugador"<<endl;
-        //cout<<"2. MODO SIMULACION"<<endl;
+        rlutil::locate(54,13);cout<<"2. Modo Simulado"<<endl;
 
         rlutil::locate(54,13);cin>>opcionModo;
 
@@ -55,7 +55,15 @@ void ModoJuego(){
                 {
                 string Nombre = nombreJugador(opcionModo);
                 system("cls");
-                Jugar(Nombre);
+                Jugar(Nombre, false);
+                }
+            break;
+
+            case 2:
+                {
+                string Nombre = nombreJugador(opcionModo);
+                system("cls");
+                Jugar(Nombre, true);
                 }
             break;
 
