@@ -24,7 +24,7 @@ void ImprimirPuntaje(int puntaje){
 }
 
 //Funcion Turno
-void ImprimirTurnos(int Ronda, string nombreJugador1, int puntaje){
+void ImprimirTurnos(int Ronda, string nombreJugador1, int sumaTotal){
     rlutil::hidecursor();
 
     for(int x=1;x<=80;x++){
@@ -34,7 +34,7 @@ void ImprimirTurnos(int Ronda, string nombreJugador1, int puntaje){
 
     cout<<"RONDA NUMERO "<<Ronda;
     cout<<"PROXIMO TURNO: "<<nombreJugador1;
-    cout<<"PUNTAJE "<<nombreJugador1<<" : "<< puntaje;
+    cout<<"PUNTAJE "<<nombreJugador1<<" : "<< sumaTotal;
 
     for(int x2=1;x2<=80;x2++){
         rlutil::locate(x2,10);
@@ -45,11 +45,12 @@ void ImprimirTurnos(int Ronda, string nombreJugador1, int puntaje){
 //Funcion jugar
 
 void Jugar(string& nombreJugador1, bool modoSimulado){
-    int RondaCont=0;
-    int LanzamientoCont=0;
+    int RondaCont=1;
+    int LanzamientoCont=1;
     const int TAM=6;
     int vDado[TAM]={};
     int PuntajeTotal=0;
+    bool juegoTerminado = false;
 
     do{
         system("cls");
@@ -63,7 +64,9 @@ void Jugar(string& nombreJugador1, bool modoSimulado){
             }
         }
 
-        PuntajeTotal += calcPuntaje(vDado, TAM);
+        int sumaTotal = calcPuntaje(vDado, TAM);
+        PuntajeTotal += sumaTotal;
+
         //Imprime por pantalla la interfaz de la ronda
         rlutil::hidecursor();
 
@@ -71,18 +74,33 @@ void Jugar(string& nombreJugador1, bool modoSimulado){
         cout<<"| RONDA NUMERO "<<RondaCont;
         cout<<"| PUNTAJE TOTAL: "<<PuntajeTotal<<endl;
         cout<<"------------------------------------"<<endl;
-        cout<<"MAXIMO PUNTAJE DE LA RONDA: " << "XD" <<endl;
+        cout<<"MAXIMO PUNTAJE DE LA RONDA: " << sumaTotal <<endl;
         cout<<"LANZAMIENTO NUMERO: "<<LanzamientoCont<<endl;
         cout<<"------------------------------------"<<endl;
         cout<<" "<<endl;
 
         mostrarDado(vDado,TAM); //Muestra los dados
+        ImprimirPuntaje(sumaTotal);
+
+        if(sumaTotal == -1){
+            cout<<"escalera, termina"<<endl;
+            juegoTerminado = true;
+            break;
+        }
+
+            juegoTerminado = true;
+        if(PuntajeTotal >= 100){
+            break;
+        }
+
+        RondaCont++;
+        LanzamientoCont++;
 
         cout<<endl;
         rlutil::anykey();
         rlutil::resetColor();
     }
-    while(PuntajeTotal<100);
+    while(RondaCont <= 3 && !juegoTerminado);
     system("cls");
 }
 
