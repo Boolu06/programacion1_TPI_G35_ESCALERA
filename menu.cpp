@@ -21,8 +21,7 @@ using namespace std;
 //5. INTERFAZ
 
 //Funcion para ingresar los nombres de los jugadores.
-string nombreJugador(int opcion){
-    string nombreJugador;
+void ImprimirMenuNombre(int opcion){
 
     if(opcion == 1 || opcion == 2){
         system("cls");
@@ -31,16 +30,16 @@ string nombreJugador(int opcion){
         rlutil::setColor(rlutil::BLACK);
         rlutil::locate(50,11);cout<<"===Ingrese el nombre del jugador 1==="<<endl;
         rlutil::resetColor();
-        rlutil::locate(54,12);cin>>nombreJugador;
-        return nombreJugador;
     }
 }
 
+
 //Funcion para mostrar el modo de juego
-void ModoJuego(){
+void ModoJuego(int& puntajeMaximo){
     system("cls");
     int opcionModo;
     rlutil::saveDefaultColor();
+    string nombreJugador1;
 
     do{
         rlutil::setBackgroundColor(rlutil::WHITE);
@@ -54,19 +53,17 @@ void ModoJuego(){
 
         switch(opcionModo){
             case 1:
-                {
-                string Nombre = nombreJugador(opcionModo);
                 system("cls");
-                Jugar(Nombre, false);
-                }
+                ImprimirMenuNombre(opcionModo);
+                rlutil::locate(54,12);cin>>nombreJugador1;
+                Jugar(nombreJugador1, false,puntajeMaximo);
             break;
 
             case 2:
-                {
-                string Nombre = nombreJugador(opcionModo);
                 system("cls");
-                Jugar(Nombre, true);
-                }
+                ImprimirMenuNombre(opcionModo);
+                rlutil::locate(54,12);cin>>nombreJugador1;
+                Jugar(nombreJugador1, true,puntajeMaximo);
             break;
 
             default:

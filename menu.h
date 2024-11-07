@@ -1,4 +1,5 @@
 #pragma once
 
-void ModoJuego();
-std::string nombreJugador(int opcion);
+void ModoJuego(int& puntajeMaximo);
+void ImprimirMenuNombre(int opcion);
+void ImprimirPuntuacionMaxima(int& puntajeMaximo, std::string& nombreJugador1);

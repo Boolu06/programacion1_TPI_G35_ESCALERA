@@ -14,7 +14,7 @@ bool ImprimirPuntaje(int puntaje, int PuntajeTotal, int vDados[]){
     if(puntaje == -1){//Si el return(puntaje) es -1 seria escalera.
         rlutil::locate(62,16);cout<<"ESCALERA, GANASTE!"<<endl;
         rlutil::anykey();
-        return juegoTerminado = true;
+        juegoTerminado = true;
     }
     else if (puntaje == 0){//Si el return(puntaje) es 0, es un sexteto de 6.
         rlutil::locate(62,16);cout<<"Sexteto de 6. Puntaje a 0"<<endl;
@@ -51,17 +51,22 @@ void ImprimirTurnos(int Ronda, string nombreJugador1, int PuntajeTotal){
     }
 }
 
+void ImprimirPuntuacionMaxima(int& puntajeMaximo, string& nombreJugador1){
+    system("cls");
+    cout<<"Jugador con el mayor puntaje: "<<nombreJugador1<<endl;
+    cout<<"Puntaje maximo: "<<puntajeMaximo<<endl;
+}
+
 //Funcion jugar
 
-void Jugar(string& nombreJugador1, bool modoSimulado){
+void Jugar(string& nombreJugador1, bool modoSimulado, int& puntajeMaximo){
     int RondaCont=1; //Contabilizar la ronda cuando se hayan realizado 3 lanzamientos, entraria la FUNCION DE TURNOS
     int LanzamientoCont=0;
     const int TAM=6;
     int vDado[TAM]={};
-    int PuntajeTotal=0;
     int PuntajeMaximoRonda=0;
     bool juegoTerminado = false;
-    int puntajeMaximo=0;
+    int PuntajeTotal=0;
 
     do{
         system("cls");
@@ -136,12 +141,13 @@ void Jugar(string& nombreJugador1, bool modoSimulado){
         cout<<endl;
         rlutil::locate(51,17);cout<<"------------------------------------------------"<<endl;
         rlutil::locate(50,18);system("pause");
+
+
     }
     while(juegoTerminado==false);
-
     if(PuntajeTotal > puntajeMaximo){
-        puntajeMaximo += PuntajeTotal;
-        cout<<"Puntaje maximo: "<< puntajeMaximo <<endl;
+        puntajeMaximo = PuntajeTotal;
+        ImprimirPuntuacionMaxima(puntajeMaximo, nombreJugador1);
     }
 
     system("pause");

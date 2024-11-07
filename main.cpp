@@ -7,11 +7,11 @@
 
 using namespace std;
 
-
-
 int main(){
     srand(time(0)); // Establece la semilla para numeros random
     int opcion;
+    int puntajeMaximo=0;
+    string nombreJugador1="";
 
     do{
         rlutil::saveDefaultColor();
@@ -26,8 +26,12 @@ int main(){
 
         switch(opcion){
             case 1:
-                ModoJuego();
+                ModoJuego(puntajeMaximo);
                 //Funcion ronda
+            break;
+
+            case 2:
+                ImprimirPuntuacionMaxima(puntajeMaximo, nombreJugador1);
             break;
 
             case 0:
