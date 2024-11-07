@@ -7,20 +7,32 @@
 
 using namespace std;
 
-//Imprime el puntaje
-void ImprimirPuntaje(int puntaje){
+//Imprime el puntaje en la interfaz
+int ImprimirPuntaje(int puntaje, int PuntajeTotal, int vDados[]){
+    bool juegoTerminado=false;
+
     if(puntaje == -1){//Si el return(puntaje) es -1 seria escalera.
-    cout<<"Escalera"<<endl;
+        rlutil::locate(54,16);cout<<"ESCALERA, GANASTE!"<<endl;
+        rlutil::anykey();
+        return juegoTerminado = true;
     }
     else if (puntaje == 0){//Si el return(puntaje) es 0, es un sexteto de 6.
-    cout<<"Sexteto de 6. Puntaje a 0"<<endl;
+        rlutil::locate(54,16);cout<<"Sexteto de 6. Puntaje a 0"<<endl;
     }
-    else if (puntaje % 10 == 0 && puntaje != 0 ){//si el puntaje es multiplo de 10 y es distinto de 0
-        rlutil::locate(54,16);cout<<"Sexteto de"<< puntaje/10<<": "<< puntaje << " puntos"<<endl;// puntaje/10 para calcular que numero salio para el sexteto
+
+    if(puntaje/10<=6 && puntaje/10>0 && puntaje != 0){//si el puntaje es multiplo de 10 y es distinto de 0
+        PuntajeTotal=puntaje;
+        rlutil::locate(54,16);cout<<"Sexteto de "<< puntaje<<": "<< PuntajeTotal << " puntos"<<endl;// puntaje/10 para calcular que numero salio para el sexteto
     }
-    else{
+
+    if(puntaje != -1 && puntaje != 0){
         cout<<endl;
         rlutil::locate(54,16);cout<<"Suma de dados: "<< puntaje << " puntos" <<endl;//Suma de dados
+    }
+
+    if(PuntajeTotal >= 100){
+        rlutil::locate(54,16);cout<<"LLEGASTE A LOS 100 PUNTOS"<<endl;
+        return juegoTerminado = true;
     }
 }
 
@@ -51,6 +63,7 @@ void Jugar(string& nombreJugador1, bool modoSimulado){
     const int TAM=6;
     int vDado[TAM]={};
     int PuntajeTotal=0;
+    int PuntajeMaximoRonda=0;
     bool juegoTerminado = false;
 
     do{
@@ -65,8 +78,15 @@ void Jugar(string& nombreJugador1, bool modoSimulado){
             }
         }
 
-        int sumaTotal = calcPuntaje(vDado, TAM);
-        PuntajeTotal += sumaTotal;
+        int sumaTotal = calcPuntaje(vDado, TAM); // asigna el return de la funcion de puntaje a la variable sumaTotal
+        if(sumaTotal==0){  //Si (puntaje) sumaTotal == 0 (sexteto), entonces resetea el puntaje total.
+            PuntajeTotal=0;
+        }
+        PuntajeTotal += sumaTotal; // Puntaje Total
+
+        if(sumaTotal>PuntajeMaximoRonda){
+            PuntajeMaximoRonda = sumaTotal; // Maximo puntaje de la ronda
+        }
 
         //Imprime por pantalla la interfaz de la ronda
         rlutil::hidecursor();
@@ -75,7 +95,7 @@ void Jugar(string& nombreJugador1, bool modoSimulado){
         cout<<" | RONDA NUMERO "<<RondaCont;
         cout<<" | PUNTAJE TOTAL: "<<PuntajeTotal<<endl;
         rlutil::locate(51,12);cout<<"------------------------------------------------"<<endl;
-        rlutil::locate(50,13);cout<<"MAXIMO PUNTAJE DE LA RONDA: " << sumaTotal <<endl;
+        rlutil::locate(50,13);cout<<"MAXIMO PUNTAJE DE LA RONDA: " << PuntajeMaximoRonda <<endl;
         rlutil::locate(50,14);cout<<"LANZAMIENTO NUMERO: "<<LanzamientoCont<<endl;
         rlutil::locate(51,15);cout<<"------------------------------------------------"<<endl;
         rlutil::locate(50,16);cout<<" "<<endl;
@@ -83,25 +103,15 @@ void Jugar(string& nombreJugador1, bool modoSimulado){
         mostrarDado(vDado,TAM); //Muestra los dados
         rlutil::resetColor();
 
-        ImprimirPuntaje(sumaTotal);
+        ImprimirPuntaje(sumaTotal,PuntajeTotal, vDado);
 
-        if(sumaTotal == -1){
-            rlutil::locate(54,16);cout<<"ESCALERA, GANASTE!"<<endl;
-            rlutil::anykey();
-            juegoTerminado = true;
-        }
-
-        if(PuntajeTotal >= 100){
-            rlutil::locate(54,16);cout<<"LLEGASTE A LOS 100 PUNTOS"<<endl;
-            rlutil::anykey();
-            juegoTerminado = true;
-        }
         LanzamientoCont++;
 
         cout<<endl;
         rlutil::anykey();
     }
     while(LanzamientoCont <= 3 && !juegoTerminado);
+    system("pause");
     system("cls");
 }
 
@@ -110,22 +120,26 @@ int calcPuntaje(int vDado[],int TAM){ //cuenta cada numero y calcula puntaje
     int conteo[7] = {0};//conteo 1 a 6
     int sumaTotal = 0; // acumulador
     int puntaje=0; // Return de la funcion
+    int sexteto=0;
 
     //Recorre el vector y suma el total de sus valores [i]
     for(int i=0;i<TAM; i++){
         conteo[vDado[i]]++;
         sumaTotal += vDado[i];
-        }
-    //comprobar sexteto(6 iguales)
+    }
+
+    //Comprueba si es sexteto(6 iguales)
     for(int i=1; i <= 6; i++){
         if(conteo[i] == 6){
             if(i == 6){
                 return puntaje=0;//si el sexteto son todos 6, devuelve 0
-            }else{
-            return puntaje=i*10;//sino, multiplica x10 el puntaje del sexteto
+            }
+            else{
+                return puntaje=i*10;//sino, multiplica x10 el puntaje del sexteto dentro de la funcion imprimirPuntaje
             }
         }
     }
+
     //calcular escalera
     int numerosDif = 0;//contador para numeros diferentes
     for(int i = 1; i <= 6; i ++){//bucle de 6
@@ -146,4 +160,5 @@ void dadoManual (int vDado[], int TAM){
         cout<<"Dado: "<< i + 1 <<" : "<< endl;
         cin>> vDado[i];
     }
+    system("cls");
 }

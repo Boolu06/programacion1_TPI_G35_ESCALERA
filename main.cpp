@@ -22,7 +22,7 @@ int main(){
         rlutil::locate(54,12); cout<<"1. Jugar"<<endl;
         rlutil::locate(54,13); cout<<"2. Puntuacion Maxima"<<endl;
         rlutil::locate(54,14); cout<<"0. Salir del juego"<<endl;
-        rlutil::locate(54,15);cin>>opcion;
+        rlutil::locate(54,15); cin>>opcion;
 
         switch(opcion){
             case 1:
