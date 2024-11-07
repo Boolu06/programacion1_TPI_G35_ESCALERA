@@ -112,6 +112,12 @@ void Jugar(string& nombreJugador1, bool modoSimulado){
         rlutil::anykey();
     }
     while(LanzamientoCont <= 3 && !juegoTerminado);
+
+    if(PuntajeTotal > puntajeMaximo){
+        puntajeMaximo += PuntajeTotal;
+        cout<<"Puntaje maximo: "<< puntajeMaximo <<endl;
+    }
+
     system("pause");
     system("cls");
 }
