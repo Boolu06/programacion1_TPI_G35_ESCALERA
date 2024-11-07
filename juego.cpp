@@ -16,7 +16,7 @@ void ImprimirPuntaje(int puntaje){
     cout<<"Sexteto de 6. Puntaje a 0"<<endl;
     }
     else if (puntaje % 10 == 0 && puntaje != 0 ){//si el puntaje es multiplo de 10 y es distinto de 0
-        rlutil::locate(54,16);cout<<"Sexteto de"<< puntaje/10<<": "<< puntaje << " puntos"<<endl;// puntaje/10 para calcular que numero salio para el sexteto
+        rlutil::locate(54,16);cout<<"Sexteto de "<< puntaje/10<<" : "<< puntaje << " puntos"<<endl;// puntaje/10 para calcular que numero salio para el sexteto
     }
     else{
         cout<<endl;
@@ -52,6 +52,7 @@ void Jugar(string& nombreJugador1, bool modoSimulado){
     int vDado[TAM]={};
     int PuntajeTotal=0;
     bool juegoTerminado = false;
+    int puntajeMaximo=0;
 
     do{
         system("cls");
@@ -95,6 +96,10 @@ void Jugar(string& nombreJugador1, bool modoSimulado){
             rlutil::locate(54,16);cout<<"LLEGASTE A LOS 100 PUNTOS"<<endl;
             rlutil::anykey();
             juegoTerminado = true;
+        }
+        if(PuntajeTotal>puntajeMaximo){
+            puntajeMaximo += PuntajeTotal;
+            cout<<"Puntaje maximo: "<<puntajeMaximo<<endl;
         }
         LanzamientoCont++;
 
