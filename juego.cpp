@@ -29,11 +29,6 @@ bool ImprimirPuntaje(int puntaje, int PuntajeTotal, int vDados[]){
         cout<<endl;
         rlutil::locate(62,16);cout<<"Suma de dados: "<< puntaje << " puntos" <<endl;//Suma de dados
     }
-
-    if(PuntajeTotal >= 100){
-        rlutil::locate(62,16);cout<<"LLEGASTE A LOS 100 PUNTOS"<<endl;
-        return juegoTerminado = true;
-    }
     return juegoTerminado;
 }
 
@@ -130,6 +125,11 @@ void Jugar(string& nombreJugador1, bool modoSimulado){
         rlutil::resetColor();
 
         juegoTerminado = ImprimirPuntaje(sumaTotal,PuntajeTotal, vDado);
+
+        if(PuntajeTotal >= 100){
+            rlutil::locate(62,16);cout<<"LLEGASTE A LOS 100 PUNTOS"<<endl;
+            juegoTerminado=true;
+        }
 
         LanzamientoCont++;
 
