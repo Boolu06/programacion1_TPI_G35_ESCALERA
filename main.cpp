@@ -11,7 +11,7 @@ int main(){
     srand(time(0)); // Establece la semilla para numeros random
     int opcion;
     int puntajeMaximo=0;
-    string nombreJugador1="";
+    string nombrePuntajeMaximo;
 
     do{
         rlutil::saveDefaultColor();
@@ -26,12 +26,13 @@ int main(){
 
         switch(opcion){
             case 1:
-                ModoJuego(puntajeMaximo);
+                ModoJuego(puntajeMaximo, nombrePuntajeMaximo);
                 //Funcion ronda
             break;
 
             case 2:
-                ImprimirPuntuacionMaxima(puntajeMaximo, nombreJugador1);
+                system("cls");
+                ImprimirPuntuacionMaxima(puntajeMaximo, nombrePuntajeMaximo);
             break;
 
             case 0:

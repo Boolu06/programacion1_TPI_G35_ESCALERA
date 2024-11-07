@@ -51,9 +51,9 @@ void ImprimirTurnos(int Ronda, string nombreJugador1, int PuntajeTotal){
     }
 }
 
-void ImprimirPuntuacionMaxima(int& puntajeMaximo, string& nombreJugador1){
+void ImprimirPuntuacionMaxima(int& puntajeMaximo, string& nombrePuntajeMaximo){
     system("cls");
-    cout<<"Jugador con el mayor puntaje: "<<nombreJugador1<<endl;
+    cout<<"Jugador con el mayor puntaje: "<<nombrePuntajeMaximo<<endl;
     cout<<"Puntaje maximo: "<<puntajeMaximo<<endl;
 }
 
@@ -67,6 +67,9 @@ void Jugar(string& nombreJugador1, bool modoSimulado, int& puntajeMaximo){
     int PuntajeMaximoRonda=0;
     bool juegoTerminado = false;
     int PuntajeTotal=0;
+    string nombrePuntajeMaximo;
+
+    rlutil::locate(54,12);cin>>nombreJugador1;
 
     do{
         system("cls");
@@ -145,9 +148,11 @@ void Jugar(string& nombreJugador1, bool modoSimulado, int& puntajeMaximo){
 
     }
     while(juegoTerminado==false);
+
     if(PuntajeTotal > puntajeMaximo){
         puntajeMaximo = PuntajeTotal;
-        ImprimirPuntuacionMaxima(puntajeMaximo, nombreJugador1);
+        nombrePuntajeMaximo = nombreJugador1;
+        ImprimirPuntuacionMaxima(puntajeMaximo,nombrePuntajeMaximo);
     }
 
     system("pause");

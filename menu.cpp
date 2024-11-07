@@ -33,13 +33,12 @@ void ImprimirMenuNombre(int opcion){
     }
 }
 
-
 //Funcion para mostrar el modo de juego
-void ModoJuego(int& puntajeMaximo){
+void ModoJuego(int& puntajeMaximo, string& nombrePuntajeMaximo){
     system("cls");
     int opcionModo;
     rlutil::saveDefaultColor();
-    string nombreJugador1;
+
 
     do{
         rlutil::setBackgroundColor(rlutil::WHITE);
@@ -51,19 +50,18 @@ void ModoJuego(int& puntajeMaximo){
 
         rlutil::locate(54,14);cin>>opcionModo;
 
+
         switch(opcionModo){
             case 1:
                 system("cls");
                 ImprimirMenuNombre(opcionModo);
-                rlutil::locate(54,12);cin>>nombreJugador1;
-                Jugar(nombreJugador1, false,puntajeMaximo);
+                Jugar(nombrePuntajeMaximo, false,puntajeMaximo);
             break;
 
             case 2:
                 system("cls");
                 ImprimirMenuNombre(opcionModo);
-                rlutil::locate(54,12);cin>>nombreJugador1;
-                Jugar(nombreJugador1, true,puntajeMaximo);
+                Jugar(nombrePuntajeMaximo, true,puntajeMaximo);
             break;
 
             default:
