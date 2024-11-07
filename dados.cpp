@@ -1,5 +1,4 @@
 #include<iostream>
-#include<ctime>
 #include "rlutil.h"
 #include "juego.h"
 #include "menu.h"
@@ -104,4 +103,14 @@ void mostrarDado(int vDado[], int TAM){
     for(i=1;i<=TAM;i++){
         dibujarDado(vDado[i-1],rand()%10+1,i*4);
     }
+}
+
+//Funcion ingreso dado manual
+void dadoManual (int vDado[], int TAM){
+    cout<<"Ingrese los valores de los dados (1 - 6): "<< endl;
+    for(int i=0; i < TAM; i++){
+        cout<<"Dado: "<< i + 1 <<" : "<< endl;
+        cin>> vDado[i];
+    }
+    system("cls");
 }

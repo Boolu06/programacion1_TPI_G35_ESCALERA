@@ -1,5 +1,4 @@
 #include<iostream>
-#include<ctime>
 #include "rlutil.h"
 #include "juego.h"
 #include "menu.h"
@@ -7,59 +6,9 @@
 
 using namespace std;
 
-//Imprime el puntaje en la interfaz
-bool ImprimirPuntaje(int puntaje, int PuntajeTotal, int vDados[]){
-    bool juegoTerminado=false;
-
-    if(puntaje == -1){//Si el return(puntaje) es -1 seria escalera.
-        rlutil::locate(62,16);cout<<"ESCALERA, GANASTE!"<<endl;
-        rlutil::anykey();
-        juegoTerminado = true;
-    }
-    else if (puntaje == 0){//Si el return(puntaje) es 0, es un sexteto de 6.
-        rlutil::locate(62,16);cout<<"Sexteto de 6. Puntaje a 0"<<endl;
-    }
-
-    if(puntaje/10<=6 && puntaje/10>0 && puntaje != 0){//si el puntaje es multiplo de 10 y es distinto de 0
-        PuntajeTotal=puntaje;
-        rlutil::locate(62,16);cout<<"Sexteto de "<< puntaje<<": "<< PuntajeTotal << " puntos"<<endl;// puntaje/10 para calcular que numero salio para el sexteto
-    }
-
-    if(puntaje != -1 && puntaje != 0){
-        cout<<endl;
-        rlutil::locate(62,16);cout<<"Suma de dados: "<< puntaje << " puntos" <<endl;//Suma de dados
-    }
-    return juegoTerminado;
-}
-
-//Funcion Turno
-void ImprimirTurnos(int Ronda, string nombreJugador1, int PuntajeTotal){
-    rlutil::hidecursor();
-
-    for(int x=50;x<=76;x++){
-        rlutil::locate(x,10);
-        cout<<(char)205;
-    }
-
-     rlutil::locate(50,11);cout<<"RONDA NUMERO "<<Ronda;
-     rlutil::locate(50,12);cout<<"PROXIMO TURNO: "<<nombreJugador1;
-     rlutil::locate(50,13);cout<<"PUNTAJE "<<nombreJugador1<<" : "<< PuntajeTotal;
-
-    for(int x2=50;x2<=76;x2++){
-        rlutil::locate(x2,14);
-        cout<<(char)205;
-    }
-}
-
-void ImprimirPuntuacionMaxima(int& puntajeMaximo, string& nombrePuntajeMaximo){
-    system("cls");
-    cout<<"Jugador con el mayor puntaje: "<<nombrePuntajeMaximo<<endl;
-    cout<<"Puntaje maximo: "<<puntajeMaximo<<endl;
-}
-
 //Funcion jugar
 
-void Jugar(string& nombreJugador1, bool modoSimulado, int& puntajeMaximo){
+void Jugar(string& nombrePuntajeMaximo, bool modoSimulado, int& puntajeMaximo){
     int RondaCont=1; //Contabilizar la ronda cuando se hayan realizado 3 lanzamientos, entraria la FUNCION DE TURNOS
     int LanzamientoCont=0;
     const int TAM=6;
@@ -67,7 +16,7 @@ void Jugar(string& nombreJugador1, bool modoSimulado, int& puntajeMaximo){
     int PuntajeMaximoRonda=0;
     bool juegoTerminado = false;
     int PuntajeTotal=0;
-    string nombrePuntajeMaximo;
+    string nombreJugador1;
 
     rlutil::locate(54,12);cin>>nombreJugador1;
 
@@ -149,26 +98,94 @@ void Jugar(string& nombreJugador1, bool modoSimulado, int& puntajeMaximo){
     }
     while(juegoTerminado==false);
 
+    system("cls");
+    rlutil::locate(50,13);cout<<"------------------------------------------------"<<endl;
+    rlutil::locate(62,14);cout<<nombreJugador1<<" GANO EN "<<RondaCont<<" RONDAS"<<endl;
+    rlutil::locate(50,15);cout<<"------------------------------------------------"<<endl;
+
+    rlutil::locate(51,16);system("pause");
+    system("cls");
     if(PuntajeTotal > puntajeMaximo){
         puntajeMaximo = PuntajeTotal;
         nombrePuntajeMaximo = nombreJugador1;
         ImprimirPuntuacionMaxima(puntajeMaximo,nombrePuntajeMaximo);
     }
+    system("cls");
+}
 
-    system("pause");
+//Imprime el puntaje en la interfaz
+bool ImprimirPuntaje(int puntaje, int PuntajeTotal, int vDados[]){
+    bool juegoTerminado=false;
+
+    if(puntaje == -1){//Si el return(puntaje) es -1 seria escalera.
+        rlutil::locate(62,16);cout<<"ESCALERA, GANASTE!"<<endl;
+        rlutil::anykey();
+        juegoTerminado = true;
+    }
+    else if (puntaje == 0){//Si el return(puntaje) es 0, es un sexteto de 6.
+        rlutil::locate(62,16);cout<<"Sexteto de 6. Puntaje a 0"<<endl;
+    }
+
+    if(puntaje/10<=6 && puntaje/10>0 && puntaje != 0){ //return(de puntaje) para saber el numero de dado.
+        PuntajeTotal=puntaje;
+        rlutil::locate(62,16);cout<<"Sexteto de "<< puntaje<<": "<< PuntajeTotal << " puntos"<<endl;
+    }
+
+    if(puntaje != -1 && puntaje != 0){
+        cout<<endl;
+        rlutil::locate(62,16);cout<<"Suma de dados: "<< puntaje << " puntos" <<endl;
+    }
+    return juegoTerminado;
+}
+
+//Funcion Turno
+void ImprimirTurnos(int Ronda, string nombreJugador1, int PuntajeTotal){
+    rlutil::hidecursor();
+
+    for(int x=53;x<=83;x++){
+        rlutil::locate(x,12);
+        cout<<(char)205;
+    }
+
+     rlutil::locate(53,13);cout<<"RONDA NUMERO "<<Ronda;
+     rlutil::locate(53,14);cout<<"PROXIMO TURNO: "<<nombreJugador1;
+     rlutil::locate(53,15);cout<<"PUNTAJE DE "<<nombreJugador1<<" : "<< PuntajeTotal;
+
+    for(int x2=53;x2<=83;x2++){
+        rlutil::locate(x2,16);
+        cout<<(char)205;
+    }
+}
+
+void ImprimirPuntuacionMaxima(int& puntajeMaximo, string& nombrePuntajeMaximo){
+    rlutil::hidecursor();
+    system("cls");
+
+    for(int x=47;x<=83;x++){
+        rlutil::locate(x,11);
+        cout<<(char)205;
+    }
+     rlutil::locate(47,13);cout<<"Jugador con el mayor puntaje: "<<nombrePuntajeMaximo<<endl;
+     rlutil::locate(47,14);cout<<"Puntaje maximo: "<<puntajeMaximo<<endl;
+
+    for(int x2=47;x2<=83;x2++){
+        rlutil::locate(x2,16);
+        cout<<(char)205;
+    }
+    rlutil::locate(47,17);system("pause");
     system("cls");
 }
 
 //Funcion calcular puntaje
 int calcPuntaje(int vDado[],int TAM){ //cuenta cada numero y calcula puntaje
-    int conteo[7] = {0};//conteo 1 a 6
+    int conteo[6]={};//conteo 1 a 6
     int sumaTotal = 0; // acumulador
     int puntaje=0; // Return de la funcion
     int sexteto=0;
 
     //Recorre el vector y suma el total de sus valores [i]
     for(int i=0;i<TAM; i++){
-        conteo[vDado[i]]++;
+        conteo[vDado[i]-1]++;
         sumaTotal += vDado[i];
     }
 
@@ -195,14 +212,4 @@ int calcPuntaje(int vDado[],int TAM){ //cuenta cada numero y calcula puntaje
         return puntaje =-1;//devulve escalera
     }
     return sumaTotal; //Si no se cumple ninguna de estas, devolver valor final
-}
-
-//funcion ingreso dado manual
-void dadoManual (int vDado[], int TAM){
-    cout<<"Ingrese los valores de los dados (1 - 6): "<< endl;
-    for(int i=0; i < TAM; i++){
-        cout<<"Dado: "<< i + 1 <<" : "<< endl;
-        cin>> vDado[i];
-    }
-    system("cls");
 }
