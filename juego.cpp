@@ -8,7 +8,7 @@
 using namespace std;
 
 //Imprime el puntaje en la interfaz
-int ImprimirPuntaje(int puntaje, int PuntajeTotal, int vDados[]){
+bool ImprimirPuntaje(int puntaje, int PuntajeTotal, int vDados[]){
     bool juegoTerminado=false;
 
     if(puntaje == -1){//Si el return(puntaje) es -1 seria escalera.
@@ -34,6 +34,7 @@ int ImprimirPuntaje(int puntaje, int PuntajeTotal, int vDados[]){
         rlutil::locate(54,16);cout<<"LLEGASTE A LOS 100 PUNTOS"<<endl;
         return juegoTerminado = true;
     }
+    return juegoTerminado;
 }
 
 //Funcion Turno
@@ -104,7 +105,7 @@ void Jugar(string& nombreJugador1, bool modoSimulado){
         mostrarDado(vDado,TAM); //Muestra los dados
         rlutil::resetColor();
 
-        ImprimirPuntaje(sumaTotal,PuntajeTotal, vDado);
+        juegoTerminado = ImprimirPuntaje(sumaTotal,PuntajeTotal, vDado);
 
         LanzamientoCont++;
 
