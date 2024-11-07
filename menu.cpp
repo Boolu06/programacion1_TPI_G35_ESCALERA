@@ -24,7 +24,7 @@ using namespace std;
 string nombreJugador(int opcion){
     string nombreJugador;
 
-    if(opcion == 1){
+    if(opcion == 1 || opcion == 2){
         system("cls");
         rlutil::saveDefaultColor();
         rlutil::setBackgroundColor(rlutil::WHITE);
