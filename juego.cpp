@@ -65,6 +65,7 @@ void Jugar(string& nombreJugador1, bool modoSimulado){
     int PuntajeTotal=0;
     int PuntajeMaximoRonda=0;
     bool juegoTerminado = false;
+    int puntajeMaximo=0;
 
     do{
         system("cls");
