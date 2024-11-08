@@ -27,19 +27,14 @@ int main(){
         switch(opcion){
             case 1:
                 ModoJuego(puntajeMaximo, nombrePuntajeMaximo);
-                //Funcion ronda
             break;
 
             case 2:
-                system("cls");
                 ImprimirPuntuacionMaxima(puntajeMaximo, nombrePuntajeMaximo);
             break;
 
             case 0:
-                system("cls");
-                cout<<"Gracias por jugar!"<<endl;
-                system("pause");
-                return 0;
+                SalirJuego;
             break;
 
             default:
