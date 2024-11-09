@@ -45,10 +45,15 @@ void Jugar(string& nombrePuntajeMaximo, bool modoSimulado, int& puntajeMaximo){
         if(sumaTotal==0){  //Si (puntaje) sumaTotal == 0 (sexteto), entonces resetea el puntaje total.
             PuntajeTotal=0;
         }
+
         PuntajeTotal += sumaTotal; // Puntaje Total
 
         if(sumaTotal>PuntajeMaximoRonda){
             PuntajeMaximoRonda = sumaTotal; // Maximo puntaje de la ronda
+        }
+
+        if(PuntajeTotal>PuntajeMaximoRonda){
+            PuntajeTotal=PuntajeMaximoRonda;// TODO
         }
 
         //Imprime por pantalla la interfaz de la ronda
@@ -63,8 +68,7 @@ void Jugar(string& nombrePuntajeMaximo, bool modoSimulado, int& puntajeMaximo){
         rlutil::locate(51,15);cout<<"------------------------------------------------"<<endl;
         rlutil::locate(50,16);cout<<" "<<endl;
 
-
-
+        //Mesa de timba
         for(int y=0;y<30;y++){
             rlutil::saveDefaultColor();
             rlutil::setColor(rlutil::BROWN);
@@ -126,7 +130,7 @@ bool ImprimirPuntaje(int puntaje, int PuntajeTotal, int vDados[]){
         rlutil::locate(62,16);cout<<"Sexteto de 6. Puntaje a 0"<<endl;
     }
 
-    if(puntaje/10<=6 && puntaje/10>0 && puntaje != 0){ //return(de puntaje) para saber el numero de dado.
+    if(puntaje/10<=6 && puntaje/10>0){ //return(de puntaje) para saber el numero de dado.
         PuntajeTotal=puntaje;
         rlutil::locate(62,16);cout<<"Sexteto de "<< puntaje<<": "<< PuntajeTotal << " puntos"<<endl;
     }
@@ -177,26 +181,28 @@ void ImprimirPuntuacionMaxima(int& puntajeMaximo, string& nombrePuntajeMaximo){
 }
 
 //Funcion calcular puntaje
-int calcPuntaje(int vDado[],int TAM){ //cuenta cada numero y calcula puntaje
-    int conteo[6]={};//conteo 1 a 6
+int calcPuntaje(int vDado[],int TAM){
+    int conteo[7]={0};
     int sumaTotal = 0; // acumulador
     int puntaje=0; // Return de la funcion
     int sexteto=0;
 
     //Recorre el vector y suma el total de sus valores [i]
     for(int i=0;i<TAM; i++){
-        conteo[vDado[i]-1]++;
+        conteo[vDado[i]]++;
         sumaTotal += vDado[i];
     }
 
+
+
     //Comprueba si es sexteto(6 iguales)
-    for(int i=1; i <= 6; i++){
+    for(int i=0; i<=TAM; i++){
         if(conteo[i] == 6){
             if(i == 6){
                 return puntaje=0;//si el sexteto son todos 6, devuelve 0
             }
             else{
-                return puntaje=i*10;//sino, multiplica x10 el puntaje del sexteto dentro de la funcion imprimirPuntaje
+                return puntaje=i*10;//El puntaje del sexteto dentro de la funcion imprimirPuntaje
             }
         }
     }

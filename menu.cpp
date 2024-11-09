@@ -36,7 +36,7 @@ void ModoJuego(int& puntajeMaximo, string& nombrePuntajeMaximo){
         rlutil::locate(53,11);cout<<"===Elija el modo de juego==="<<endl;
         rlutil::resetColor();
         rlutil::locate(54,12);cout<<"1. Un solo jugador"<<endl;
-      //  rlutil::locate(54,13);cout<<"2. Modo Simulado"<<endl;
+        rlutil::locate(54,13);cout<<"2. Modo Simulado"<<endl;
         rlutil::locate(54,14);cin>>opcionModo;
 
         switch(opcionModo){
@@ -46,12 +46,11 @@ void ModoJuego(int& puntajeMaximo, string& nombrePuntajeMaximo){
                 Jugar(nombrePuntajeMaximo, false,puntajeMaximo);
             break;
 
-           /* case 2:
+           case 2:
                 system("cls");
                 ImprimirMenuNombre(opcionModo);
                 Jugar(nombrePuntajeMaximo, true,puntajeMaximo);
             break;
-            */
 
             default:
                 system("cls");

@@ -34,7 +34,7 @@ int main(){
             break;
 
             case 0:
-                SalirJuego;
+                SalirJuego();
             break;
 
             default:
