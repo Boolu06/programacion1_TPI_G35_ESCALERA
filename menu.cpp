@@ -8,12 +8,23 @@ using namespace std;
 
 //Funcion para ingresar los nombres de los jugadores.
 void ImprimirMenuNombre(int opcion){
-    if(opcion == 1 || opcion == 2){
+    if(opcion == 1 || opcion == 3){
         system("cls");
         rlutil::saveDefaultColor();
         rlutil::setBackgroundColor(rlutil::WHITE);
         rlutil::setColor(rlutil::BLACK);
         rlutil::locate(50,11);cout<<"===Ingrese el nombre del jugador 1==="<<endl;
+        rlutil::resetColor();
+    }
+
+    if(opcion == 2){
+        system("cls");
+        rlutil::saveDefaultColor();
+        rlutil::setBackgroundColor(rlutil::WHITE);
+        rlutil::setColor(rlutil::BLACK);
+        rlutil::locate(50,11);cout<<"===Ingrese el nombre del jugador 1==="<<endl;
+        system("cls");
+        rlutil::locate(50,11);cout<<"===Ingrese el nombre del jugador 2==="<<endl;
         rlutil::resetColor();
     }
 }
@@ -36,8 +47,9 @@ void ModoJuego(int& puntajeMaximo, string& nombrePuntajeMaximo){
         rlutil::locate(53,11);cout<<"===Elija el modo de juego==="<<endl;
         rlutil::resetColor();
         rlutil::locate(54,12);cout<<"1. Un solo jugador"<<endl;
-        rlutil::locate(54,13);cout<<"2. Modo Simulado"<<endl;
-        rlutil::locate(54,14);cin>>opcionModo;
+        rlutil::locate(54,13);cout<<"2. Dos jugadores"<<endl;
+        rlutil::locate(54,14);cout<<"3. Modo Simulado"<<endl;
+        rlutil::locate(54,15);cin>>opcionModo;
 
         switch(opcionModo){
             case 1:

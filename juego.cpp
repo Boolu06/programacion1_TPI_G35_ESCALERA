@@ -18,7 +18,9 @@ void Jugar(string& nombrePuntajeMaximo, bool modoSimulado, int& puntajeMaximo){
     int PuntajeTotal=0;
     string nombreJugador1;
 
-    rlutil::locate(54,12);cin>>nombreJugador1;
+    cin.ignore();
+    rlutil::locate(54,12);
+    getline(cin, nombreJugador1);
 
     do{
         system("cls");
@@ -27,6 +29,7 @@ void Jugar(string& nombrePuntajeMaximo, bool modoSimulado, int& puntajeMaximo){
         if(LanzamientoCont == 3){
             system("cls");
             LanzamientoCont=0;
+            PuntajeMaximoRonda=0;
             ImprimirTurnos(RondaCont,nombreJugador1,PuntajeTotal);
             RondaCont++;
             rlutil::anykey();
@@ -41,19 +44,13 @@ void Jugar(string& nombrePuntajeMaximo, bool modoSimulado, int& puntajeMaximo){
             }
         }
 
-        int sumaTotal = calcPuntaje(vDado, TAM); // asigna el return de la funcion de puntaje a la variable sumaTotal
-        if(sumaTotal==0){  //Si (puntaje) sumaTotal == 0 (sexteto), entonces resetea el puntaje total.
+        int valorTirada = calcPuntaje(vDado, TAM); // asigna el return de la funcion de puntaje a la variable valorTirada
+        if(valorTirada==0){  //Si (puntaje) valorTirada == 0 (sexteto), entonces resetea el puntaje total.
             PuntajeTotal=0;
         }
 
-        PuntajeTotal += sumaTotal; // Puntaje Total
-
-        if(sumaTotal>PuntajeMaximoRonda){
-            PuntajeMaximoRonda = sumaTotal; // Maximo puntaje de la ronda
-        }
-
-        if(PuntajeTotal>PuntajeMaximoRonda){
-            PuntajeTotal=PuntajeMaximoRonda;// TODO
+        if(valorTirada>PuntajeMaximoRonda){
+            PuntajeMaximoRonda = valorTirada;
         }
 
         //Imprime por pantalla la interfaz de la ronda
@@ -82,10 +79,10 @@ void Jugar(string& nombrePuntajeMaximo, bool modoSimulado, int& puntajeMaximo){
             }
         }
 
-        mostrarDado(vDado,TAM); //Muestra los dados
+        mostrarDado(vDado,TAM);
         rlutil::resetColor();
 
-        juegoTerminado = ImprimirPuntaje(sumaTotal,PuntajeTotal, vDado);
+        juegoTerminado = ImprimirPuntaje(valorTirada,PuntajeTotal, vDado);
 
         if(PuntajeTotal >= 100){
             rlutil::locate(62,16);cout<<"LLEGASTE A LOS 100 PUNTOS"<<endl;
@@ -93,6 +90,10 @@ void Jugar(string& nombrePuntajeMaximo, bool modoSimulado, int& puntajeMaximo){
         }
 
         LanzamientoCont++;
+
+        if(PuntajeMaximoRonda>=valorTirada && LanzamientoCont==3){ // Tiene que acumular el lanzamiento mas alto de las 3 tiradas
+            PuntajeTotal += PuntajeMaximoRonda;
+        }
 
         cout<<endl;
         rlutil::locate(51,17);cout<<"------------------------------------------------"<<endl;
