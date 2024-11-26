@@ -6,29 +6,6 @@
 
 using namespace std;
 
-//Funcion para ingresar los nombres de los jugadores.
-void ImprimirMenuNombre(int opcion){
-    if(opcion == 1 || opcion == 3){
-        system("cls");
-        rlutil::saveDefaultColor();
-        rlutil::setBackgroundColor(rlutil::WHITE);
-        rlutil::setColor(rlutil::BLACK);
-        rlutil::locate(50,11);cout<<"===Ingrese el nombre del jugador 1==="<<endl;
-        rlutil::resetColor();
-    }
-
-    if(opcion == 2){
-        system("cls");
-        rlutil::saveDefaultColor();
-        rlutil::setBackgroundColor(rlutil::WHITE);
-        rlutil::setColor(rlutil::BLACK);
-        rlutil::locate(50,11);cout<<"===Ingrese el nombre del jugador 1==="<<endl;
-        system("cls");
-        rlutil::locate(50,11);cout<<"===Ingrese el nombre del jugador 2==="<<endl;
-        rlutil::resetColor();
-    }
-}
-
 int SalirJuego(){
     system("cls");
     cout<<"Gracias por jugar!"<<endl;
@@ -54,14 +31,17 @@ void ModoJuego(int& puntajeMaximo, string& nombrePuntajeMaximo){
         switch(opcionModo){
             case 1:
                 system("cls");
-                ImprimirMenuNombre(opcionModo);
-                Jugar(nombrePuntajeMaximo, false,puntajeMaximo);
+                Jugar(nombrePuntajeMaximo,opcionModo, false,puntajeMaximo);
             break;
 
            case 2:
                 system("cls");
-                ImprimirMenuNombre(opcionModo);
-                Jugar(nombrePuntajeMaximo, true,puntajeMaximo);
+                Jugar(nombrePuntajeMaximo,opcionModo, false,puntajeMaximo);
+            break;
+
+            case 3:
+                system("cls");
+                Jugar(nombrePuntajeMaximo,opcionModo, true,puntajeMaximo);
             break;
 
             default:
@@ -70,5 +50,5 @@ void ModoJuego(int& puntajeMaximo, string& nombrePuntajeMaximo){
             break;
         }
     }
-    while(opcionModo!=1 && opcionModo!=2);
+    while(opcionModo!=1 && opcionModo!=2 && opcionModo!=3);
 }

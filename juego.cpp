@@ -8,7 +8,7 @@ using namespace std;
 
 //Funcion jugar
 
-void Jugar(string& nombrePuntajeMaximo, bool modoSimulado, int& puntajeMaximo){
+void Jugar(string& nombrePuntajeMaximo, int opcionModo, bool modoSimulado, int& puntajeMaximo){
     int RondaCont=1; //Contabilizar la ronda cuando se hayan realizado 3 lanzamientos, entraria la FUNCION DE TURNOS
     int LanzamientoCont=0;
     const int TAM=6;
@@ -17,10 +17,52 @@ void Jugar(string& nombrePuntajeMaximo, bool modoSimulado, int& puntajeMaximo){
     bool juegoTerminado = false;
     int PuntajeTotal=0;
     string nombreJugador1;
+    string nombreJugador2;
 
-    cin.ignore();
-    rlutil::locate(54,12);
-    getline(cin, nombreJugador1);
+    switch(opcionModo){
+        case 1:
+            rlutil::saveDefaultColor();
+            rlutil::setBackgroundColor(rlutil::WHITE);
+            rlutil::setColor(rlutil::BLACK);
+            cin.ignore();
+            rlutil::locate(50,11);cout<<"===Ingrese el nombre del jugador 1==="<<endl;
+            rlutil::resetColor();
+            rlutil::locate(54,12);getline(cin, nombreJugador1);
+        break;
+
+        case 2:
+            rlutil::saveDefaultColor();
+            rlutil::setBackgroundColor(rlutil::WHITE);
+            rlutil::setColor(rlutil::BLACK);
+            cin.ignore();
+            rlutil::locate(50,11);cout<<"===Ingrese el nombre del jugador 1==="<<endl;
+            rlutil::resetColor();
+            rlutil::locate(54,12);getline(cin, nombreJugador1);
+
+            system("cls");
+            rlutil::saveDefaultColor();
+            rlutil::setBackgroundColor(rlutil::WHITE);
+            rlutil::setColor(rlutil::BLACK);
+            rlutil::locate(50,11);cout<<"===Ingrese el nombre del jugador 2==="<<endl;
+            rlutil::resetColor();
+            rlutil::locate(54,12);getline(cin, nombreJugador2);
+        break;
+
+        case 3:
+            rlutil::saveDefaultColor();
+            rlutil::setBackgroundColor(rlutil::WHITE);
+            rlutil::setColor(rlutil::BLACK);
+            cin.ignore();
+            rlutil::locate(50,11);cout<<"===Ingrese el nombre del jugador 1==="<<endl;
+            rlutil::resetColor();
+            rlutil::locate(54,12);getline(cin, nombreJugador1);
+        break;
+
+        default:
+            system("cls");
+            cout<<"Ingrese una opcion valida"<<endl;
+        break;
+    }
 
     do{
         system("cls");
