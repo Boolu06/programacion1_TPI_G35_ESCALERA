@@ -31,6 +31,8 @@ int main(){
 
             case 2:
                 ImprimirPuntuacionMaxima(puntajeMaximo, nombrePuntajeMaximo);
+                rlutil::locate(47,17);system("pause");
+                system("cls");
             break;
 
             case 0:

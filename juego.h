@@ -1,7 +1,8 @@
 #pragma once
 
 int calcPuntaje(int vDado[],int TAM);
-void ImprimirTurnos(int Ronda, std::string nombreJugador1, int PuntajeTotal);
+void ImprimirTurnos(int Ronda, std::string nombreJugador1, int PuntajeTotalJugador1);
+void ImprimirTurnos2Jugadores(int Ronda, std::string nombreJugador1, std::string nombreJugador2, int PuntajeTotalJugador1, int PuntajeTotalJugador2, bool TurnoJugador);
 void Jugar(std::string& nombrePuntajeMaximo, int opcionModo, bool modoSimulado,int& puntajeMaximo);
-bool ImprimirPuntaje(int puntaje, int PuntajeTotal, int vDados[]);
+bool NombreJugada(int puntaje, bool TurnoJugador);
 void ImprimirPuntuacionMaxima(int& puntajeMaximo,std::string& nombrePuntajeMaximo);

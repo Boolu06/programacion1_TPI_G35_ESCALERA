@@ -9,13 +9,19 @@ using namespace std;
 //Funcion jugar
 
 void Jugar(string& nombrePuntajeMaximo, int opcionModo, bool modoSimulado, int& puntajeMaximo){
-    int RondaCont=1; //Contabilizar la ronda cuando se hayan realizado 3 lanzamientos, entraria la FUNCION DE TURNOS
+    int RondaCont=1;
     int LanzamientoCont=0;
+    int LanzamientoContJugador1=0;
+    int LanzamientoContJugador2=0;
+    int PuntajeMaximoRonda=0;
+    int PuntajeTotalJugador1=0;
+    int PuntajeTotalJugador2=0;
+    int valorTirada=0;
     const int TAM=6;
     int vDado[TAM]={};
-    int PuntajeMaximoRonda=0;
     bool juegoTerminado = false;
-    int PuntajeTotal=0;
+    bool TurnoJugador = true;
+    bool llegoacien = false;
     string nombreJugador1;
     string nombreJugador2;
 
@@ -57,113 +63,237 @@ void Jugar(string& nombrePuntajeMaximo, int opcionModo, bool modoSimulado, int& 
             rlutil::resetColor();
             rlutil::locate(54,12);getline(cin, nombreJugador1);
         break;
-
-        default:
-            system("cls");
-            cout<<"Ingrese una opcion valida"<<endl;
-        break;
     }
 
     do{
-        system("cls");
-        rlutil::resetColor();
+        if(opcionModo==1 && opcionModo==3){
+            system("cls");
+            rlutil::resetColor();
 
-        if(LanzamientoCont == 3){
-            system("cls");
-            LanzamientoCont=0;
-            PuntajeMaximoRonda=0;
-            ImprimirTurnos(RondaCont,nombreJugador1,PuntajeTotal);
-            RondaCont++;
-            rlutil::anykey();
-            system("cls");
+            if(LanzamientoCont == 3){
+                system("cls");
+                LanzamientoCont=0;
+                PuntajeMaximoRonda=0;
+                ImprimirTurnos(RondaCont,nombreJugador1,PuntajeTotalJugador1);
+                RondaCont++;
+                rlutil::anykey();
+                system("cls");
+            }
+
+            if(modoSimulado){
+                dadoManual(vDado, TAM);
+            }else{
+                for(int i=0;i<TAM;i++){
+                vDado[i]=tiradaDado(); // Vector de 6(TAM) componentes que contienen numeros random del 1 al 6
+                }
+            }
+
+            valorTirada = calcPuntaje(vDado, TAM); // asigna el return de la funcion de puntaje a la variable valorTirada
+            if(valorTirada==0){  //Si (puntaje) valorTirada == 0 (sexteto), entonces resetea el puntaje total.
+                PuntajeTotalJugador1=0;
+            }
+
+            if(valorTirada>PuntajeMaximoRonda){
+                PuntajeMaximoRonda = valorTirada;
+            }
+
+            //Imprime por pantalla la interfaz de la ronda
+            rlutil::hidecursor();
+
+            rlutil::locate(50,11);cout<<"TURNO DE "<<nombreJugador1;
+            cout<<" | RONDA NUMERO "<<RondaCont;
+            cout<<" | PUNTAJE TOTAL: "<<PuntajeTotalJugador1<<endl;
+            rlutil::locate(51,12);cout<<"------------------------------------------------"<<endl;
+            rlutil::locate(50,13);cout<<"MAXIMO PUNTAJE DE LA RONDA: " << PuntajeMaximoRonda <<endl;
+            rlutil::locate(50,14);cout<<"LANZAMIENTO NUMERO: "<<LanzamientoContJugador1+1<<endl;
+            rlutil::locate(51,15);cout<<"------------------------------------------------"<<endl;
+            rlutil::locate(50,16);cout<<" "<<endl;
+
+            //Mesa de timba
+            for(int y=0;y<30;y++){
+                rlutil::saveDefaultColor();
+                rlutil::setColor(rlutil::BROWN);
+                rlutil::locate(31,y);
+                cout<<(char)186;
+                for(int x=1;x<31;x++){
+                    rlutil::locate(x,y);
+                    rlutil::setColor(rlutil::LIGHTGREEN);
+                    rlutil::setBackgroundColor(rlutil::BLACK);
+                    cout<<(char)177;
+                }
+            }
+
+            mostrarDado(vDado,TAM);
+            rlutil::resetColor();
+
+            juegoTerminado = NombreJugada(valorTirada, TurnoJugador);
+
+            if(PuntajeTotalJugador1 >= 100){
+                rlutil::locate(62,16);cout<<"LLEGASTE A LOS 100 PUNTOS"<<endl;
+                juegoTerminado=true;
+            }
+
+            LanzamientoCont++;
+
+            if(PuntajeMaximoRonda>=valorTirada && LanzamientoCont==3){ // Tiene que acumular el lanzamiento mas alto de las 3 tiradas
+                PuntajeTotalJugador1 += PuntajeMaximoRonda;
+            }
+
+            cout<<endl;
+            rlutil::locate(51,17);cout<<"------------------------------------------------"<<endl;
+            rlutil::locate(50,18);system("pause");
         }
 
-        if(modoSimulado){
-            dadoManual(vDado, TAM);
-        }else{
+        else{
+            // Entra el modo 2 jugadores
+            system("cls");
+            rlutil::resetColor();
+
+            if(LanzamientoCont == 3){
+                system("cls");
+                LanzamientoCont=0;
+                PuntajeMaximoRonda=0;
+
+                if(TurnoJugador == true){
+                    system("cls");
+                    ImprimirTurnos2Jugadores(RondaCont,nombreJugador1, nombreJugador2,PuntajeTotalJugador1, PuntajeTotalJugador2, TurnoJugador);
+                    TurnoJugador=false;
+                    rlutil::anykey();
+                    system("cls");
+                }
+                else{
+                    system("cls");
+                    ImprimirTurnos2Jugadores(RondaCont,nombreJugador1, nombreJugador2,PuntajeTotalJugador1, PuntajeTotalJugador2, TurnoJugador);
+                    TurnoJugador=true;
+                    RondaCont++;
+                    rlutil::anykey();
+                    system("cls");
+                }
+            }
+
             for(int i=0;i<TAM;i++){
-            vDado[i]=tiradaDado(); // Vector de 6(TAM) componentes que contienen numeros random del 1 al 6
+                vDado[i]=tiradaDado(); // Vector de 6(TAM) componentes que contienen numeros random del 1 al 6
             }
-        }
 
-        int valorTirada = calcPuntaje(vDado, TAM); // asigna el return de la funcion de puntaje a la variable valorTirada
-        if(valorTirada==0){  //Si (puntaje) valorTirada == 0 (sexteto), entonces resetea el puntaje total.
-            PuntajeTotal=0;
-        }
-
-        if(valorTirada>PuntajeMaximoRonda){
-            PuntajeMaximoRonda = valorTirada;
-        }
-
-        //Imprime por pantalla la interfaz de la ronda
-        rlutil::hidecursor();
-
-        rlutil::locate(50,11);cout<<"TURNO DE "<<nombreJugador1;
-        cout<<" | RONDA NUMERO "<<RondaCont;
-        cout<<" | PUNTAJE TOTAL: "<<PuntajeTotal<<endl;
-        rlutil::locate(51,12);cout<<"------------------------------------------------"<<endl;
-        rlutil::locate(50,13);cout<<"MAXIMO PUNTAJE DE LA RONDA: " << PuntajeMaximoRonda <<endl;
-        rlutil::locate(50,14);cout<<"LANZAMIENTO NUMERO: "<<LanzamientoCont+1<<endl;
-        rlutil::locate(51,15);cout<<"------------------------------------------------"<<endl;
-        rlutil::locate(50,16);cout<<" "<<endl;
-
-        //Mesa de timba
-        for(int y=0;y<30;y++){
-            rlutil::saveDefaultColor();
-            rlutil::setColor(rlutil::BROWN);
-            rlutil::locate(31,y);
-            cout<<(char)186;
-            for(int x=1;x<31;x++){
-                rlutil::locate(x,y);
-                rlutil::setColor(rlutil::LIGHTGREEN);
-                rlutil::setBackgroundColor(rlutil::BLACK);
-                cout<<(char)177;
+            valorTirada = calcPuntaje(vDado, TAM);
+            if(valorTirada==0){
+                if(TurnoJugador==true){
+                    PuntajeTotalJugador1=0;
+                }
+                else{
+                    PuntajeTotalJugador2=0;
+                }
             }
+
+            if(valorTirada>PuntajeMaximoRonda){
+                PuntajeMaximoRonda = valorTirada;
+            }
+
+            //Imprime por pantalla la interfaz de la ronda
+            rlutil::hidecursor();
+
+            if(TurnoJugador == true){
+                rlutil::locate(50,11);cout<<"TURNO DE "<<nombreJugador1;
+                cout<<" | RONDA NUMERO "<<RondaCont;
+                cout<<" | PUNTAJE TOTAL: "<<PuntajeTotalJugador1<<endl;
+            }
+            else{
+                rlutil::locate(50,11);cout<<"TURNO DE "<<nombreJugador2;
+                cout<<" | RONDA NUMERO "<<RondaCont;
+                cout<<" | PUNTAJE TOTAL: "<<PuntajeTotalJugador2<<endl;
+            }
+
+            rlutil::locate(51,12);cout<<"------------------------------------------------"<<endl;
+            rlutil::locate(50,13);cout<<"MAXIMO PUNTAJE DE LA RONDA: " << PuntajeMaximoRonda <<endl;
+            rlutil::locate(50,14);cout<<"LANZAMIENTO NUMERO: "<<LanzamientoCont+1<<endl;
+            rlutil::locate(51,15);cout<<"------------------------------------------------"<<endl;
+            rlutil::locate(50,16);cout<<" "<<endl;
+
+            //Mesa de timba
+            for(int y=0;y<30;y++){
+                rlutil::saveDefaultColor();
+                rlutil::setColor(rlutil::BROWN);
+                rlutil::locate(31,y);
+                cout<<(char)186;
+                for(int x=1;x<31;x++){
+                    rlutil::locate(x,y);
+                    rlutil::setColor(rlutil::LIGHTGREEN);
+                    rlutil::setBackgroundColor(rlutil::BLACK);
+                    cout<<(char)177;
+                }
+            }
+
+            mostrarDado(vDado,TAM);
+            rlutil::resetColor();
+
+            juegoTerminado = NombreJugada(valorTirada, TurnoJugador);
+
+            LanzamientoCont++;
+
+            if(PuntajeMaximoRonda>=valorTirada && LanzamientoCont==3){
+                if(TurnoJugador==true){
+                    PuntajeTotalJugador1 += PuntajeMaximoRonda;
+                }
+                else{
+                    PuntajeTotalJugador2 += PuntajeMaximoRonda;
+                }
+            }
+
+            /*if(PuntajeTotalJugador1>=100 && PuntajeTotalJugador2 < 100){
+                rlutil::locate(62,16);cout<<"LLEGASTE A LOS 100 PUNTOS"<<endl;
+                juegoTerminado=false;
+            }
+            else if(PuntajeTotalJugador2 >= 100 && PuntajeTotalJugador1 < 100){
+                rlutil::locate(62,16);cout<<"LLEGASTE A LOS 100 PUNTOS"<<endl;
+                juegoTerminado=true;
+            }
+            */
+
+            if(PuntajeTotalJugador1 >= 100 && PuntajeTotalJugador2 >= 100){ //TODO
+              llegoacien = true;
+            }
+            if(llegoacien == true){
+              juegoTerminado = true;
+            }
+
+            cout<<endl;
+            rlutil::locate(51,17);cout<<"------------------------------------------------"<<endl;
+            rlutil::locate(50,18);system("pause");
         }
-
-        mostrarDado(vDado,TAM);
-        rlutil::resetColor();
-
-        juegoTerminado = ImprimirPuntaje(valorTirada,PuntajeTotal, vDado);
-
-        if(PuntajeTotal >= 100){
-            rlutil::locate(62,16);cout<<"LLEGASTE A LOS 100 PUNTOS"<<endl;
-            juegoTerminado=true;
-        }
-
-        LanzamientoCont++;
-
-        if(PuntajeMaximoRonda>=valorTirada && LanzamientoCont==3){ // Tiene que acumular el lanzamiento mas alto de las 3 tiradas
-            PuntajeTotal += PuntajeMaximoRonda;
-        }
-
-        cout<<endl;
-        rlutil::locate(51,17);cout<<"------------------------------------------------"<<endl;
-        rlutil::locate(50,18);system("pause");
-
-
-    }
-    while(juegoTerminado==false);
+    } while(juegoTerminado==false);
 
     system("cls");
-    rlutil::locate(50,13);cout<<"------------------------------------------------"<<endl;
-    rlutil::locate(62,14);cout<<nombreJugador1<<" GANO EN "<<RondaCont<<" RONDAS"<<endl;
-    rlutil::locate(50,15);cout<<"------------------------------------------------"<<endl;
-
+    if(PuntajeTotalJugador1 > PuntajeTotalJugador2 || valorTirada == -1){
+        rlutil::locate(50,13);cout<<"------------------------------------------------"<<endl;
+        rlutil::locate(62,14);cout<<nombreJugador1<<" GANO EN "<<RondaCont<<" RONDAS"<<endl;
+        rlutil::locate(50,15);cout<<"------------------------------------------------"<<endl;
+    }
+    else if (PuntajeTotalJugador2 > PuntajeTotalJugador1 || valorTirada == -1){
+        rlutil::locate(50,13);cout<<"------------------------------------------------"<<endl;
+        rlutil::locate(62,14);cout<<nombreJugador2<<" GANO EN "<<RondaCont<<" RONDAS"<<endl;
+        rlutil::locate(50,15);cout<<"------------------------------------------------"<<endl;
+    }
     rlutil::locate(51,16);system("pause");
     system("cls");
-    if(PuntajeTotal > puntajeMaximo){
-        puntajeMaximo = PuntajeTotal;
+
+    if(PuntajeTotalJugador1 > puntajeMaximo){
+        puntajeMaximo = PuntajeTotalJugador1;
         nombrePuntajeMaximo = nombreJugador1;
         ImprimirPuntuacionMaxima(puntajeMaximo,nombrePuntajeMaximo);
     }
+
+    if(PuntajeTotalJugador2 > puntajeMaximo){
+        puntajeMaximo = PuntajeTotalJugador2;
+        nombrePuntajeMaximo = nombreJugador2;
+        ImprimirPuntuacionMaxima(puntajeMaximo,nombrePuntajeMaximo);
+    }
+
     system("cls");
 }
 
 //Imprime el puntaje en la interfaz
-bool ImprimirPuntaje(int puntaje, int PuntajeTotal, int vDados[]){
+bool NombreJugada(int puntaje, bool TurnoJugador){
     bool juegoTerminado=false;
-
     if(puntaje == -1){//Si el return(puntaje) es -1 seria escalera.
         rlutil::locate(62,16);cout<<"ESCALERA, GANASTE!"<<endl;
         rlutil::anykey();
@@ -174,8 +304,7 @@ bool ImprimirPuntaje(int puntaje, int PuntajeTotal, int vDados[]){
     }
 
     if(puntaje/10<=6 && puntaje/10>0){ //return(de puntaje) para saber el numero de dado.
-        PuntajeTotal=puntaje;
-        rlutil::locate(62,16);cout<<"Sexteto de "<< puntaje<<": "<< PuntajeTotal << " puntos"<<endl;
+        rlutil::locate(62,16);cout<<"Sexteto de "<< puntaje/10<<": "<< puntaje << " puntos"<<endl;
     }
 
     if(puntaje != -1 && puntaje != 0){
@@ -186,7 +315,7 @@ bool ImprimirPuntaje(int puntaje, int PuntajeTotal, int vDados[]){
 }
 
 //Funcion Turno
-void ImprimirTurnos(int Ronda, string nombreJugador1, int PuntajeTotal){
+void ImprimirTurnos(int Ronda, string nombreJugador1, int PuntajeTotalJugador1){
     rlutil::hidecursor();
 
     for(int x=53;x<=83;x++){
@@ -194,12 +323,36 @@ void ImprimirTurnos(int Ronda, string nombreJugador1, int PuntajeTotal){
         cout<<(char)205;
     }
 
-     rlutil::locate(53,13);cout<<"RONDA NUMERO "<<Ronda;
-     rlutil::locate(53,14);cout<<"PROXIMO TURNO: "<<nombreJugador1;
-     rlutil::locate(53,15);cout<<"PUNTAJE DE "<<nombreJugador1<<" : "<< PuntajeTotal;
+    rlutil::locate(53,13);cout<<"RONDA NUMERO "<<Ronda;
+    rlutil::locate(53,14);cout<<"PROXIMO TURNO: "<<nombreJugador1;
+    rlutil::locate(53,15);cout<<"PUNTAJE DE "<<nombreJugador1<<" : "<< PuntajeTotalJugador1;
 
     for(int x2=53;x2<=83;x2++){
         rlutil::locate(x2,16);
+        cout<<(char)205;
+    }
+}
+
+void ImprimirTurnos2Jugadores(int Ronda, string nombreJugador1, string nombreJugador2, int PuntajeTotalJugador1, int PuntajeTotalJugador2, bool TurnoJugador){
+    rlutil::hidecursor();
+
+    for(int x=53;x<=83;x++){
+        rlutil::locate(x,12);
+        cout<<(char)205;
+    }
+
+    rlutil::locate(53,13);cout<<"RONDA NUMERO "<<Ronda;
+    if(TurnoJugador==true){
+        rlutil::locate(53,14);cout<<"PROXIMO TURNO: "<<nombreJugador2;
+    }
+    else{
+        rlutil::locate(53,14);cout<<"PROXIMO TURNO: "<<nombreJugador1;
+    }
+    rlutil::locate(53,15);cout<<"PUNTAJE DE "<<nombreJugador1<<" : "<< PuntajeTotalJugador1;
+    rlutil::locate(53,16);cout<<"PUNTAJE DE "<<nombreJugador2<<" : "<< PuntajeTotalJugador2;
+
+    for(int x2=53;x2<=83;x2++){
+        rlutil::locate(x2,17);
         cout<<(char)205;
     }
 }
@@ -219,8 +372,7 @@ void ImprimirPuntuacionMaxima(int& puntajeMaximo, string& nombrePuntajeMaximo){
         rlutil::locate(x2,16);
         cout<<(char)205;
     }
-    rlutil::locate(47,17);system("pause");
-    system("cls");
+    //
 }
 
 //Funcion calcular puntaje
