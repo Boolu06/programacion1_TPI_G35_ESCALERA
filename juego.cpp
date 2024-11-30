@@ -66,7 +66,7 @@ void Jugar(string& nombrePuntajeMaximo, int opcionModo, bool modoSimulado, int& 
     }
 
     do{
-        if(opcionModo==1 && opcionModo==3){
+        if(opcionModo==1 && opcionModo==3){ //TODO: Fixear los bugs para quede limpio
             system("cls");
             rlutil::resetColor();
 
@@ -75,7 +75,7 @@ void Jugar(string& nombrePuntajeMaximo, int opcionModo, bool modoSimulado, int& 
                 LanzamientoCont=0;
                 PuntajeMaximoRonda=0;
                 ImprimirTurnos(RondaCont,nombreJugador1,PuntajeTotalJugador1);
-                RondaCont++;
+                RondaCont++; // TODO: Predeterminar una cantidad de rondas al inicio de la partida, gana el puntaje mas alto si no se llego a 100
                 rlutil::anykey();
                 system("cls");
             }
@@ -171,7 +171,8 @@ void Jugar(string& nombrePuntajeMaximo, int opcionModo, bool modoSimulado, int& 
                 }
             }
 
-            for(int i=0;i<TAM;i++){
+            //TODO: Empate
+            for(int i=0;i<TAM;i++){ //TODO: Falta implementar modo simulado 2 jugadores
                 vDado[i]=tiradaDado(); // Vector de 6(TAM) componentes que contienen numeros random del 1 al 6
             }
 
@@ -239,21 +240,20 @@ void Jugar(string& nombrePuntajeMaximo, int opcionModo, bool modoSimulado, int& 
                 }
             }
 
-            /*if(PuntajeTotalJugador1>=100 && PuntajeTotalJugador2 < 100){
-                rlutil::locate(62,16);cout<<"LLEGASTE A LOS 100 PUNTOS"<<endl;
-                juegoTerminado=false;
-            }
-            else if(PuntajeTotalJugador2 >= 100 && PuntajeTotalJugador1 < 100){
+            //TODO: Chequear si funciona correctamente en todos los casos.
+            if(PuntajeTotalJugador1>=100 && PuntajeTotalJugador2 < 100 && TurnoJugador == false && LanzamientoCont == 3){
                 rlutil::locate(62,16);cout<<"LLEGASTE A LOS 100 PUNTOS"<<endl;
                 juegoTerminado=true;
             }
-            */
 
-            if(PuntajeTotalJugador1 >= 100 && PuntajeTotalJugador2 >= 100){ //TODO
-              llegoacien = true;
+            if(PuntajeTotalJugador1 >= 100 && PuntajeTotalJugador2 >= 100){
+                rlutil::locate(62,16);cout<<"LLEGASTE A LOS 100 PUNTOS"<<endl;
+                juegoTerminado=true;
             }
-            if(llegoacien == true){
-              juegoTerminado = true;
+
+            if(PuntajeTotalJugador1 < 100 && PuntajeTotalJugador2 >= 100){
+                rlutil::locate(62,16);cout<<"LLEGASTE A LOS 100 PUNTOS"<<endl;
+                juegoTerminado=true;
             }
 
             cout<<endl;
