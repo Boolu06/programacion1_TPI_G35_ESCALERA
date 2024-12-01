@@ -10,7 +10,8 @@ using namespace std;
 int main(){
     srand(time(0)); // Establece la semilla para numeros random
     int opcion;
-    int puntajeMaximo=0;
+    int puntajeMaximo = 0;
+    bool root = true;
     string nombrePuntajeMaximo;
 
     do{
@@ -23,6 +24,7 @@ int main(){
         rlutil::locate(54,13); cout<<"2. Puntuacion Maxima"<<endl;
         rlutil::locate(54,14); cout<<"0. Salir del juego"<<endl;
         rlutil::locate(54,15); cin>>opcion;
+        system("cls");
 
         switch(opcion){
             case 1:
@@ -30,9 +32,7 @@ int main(){
             break;
 
             case 2:
-                ImprimirPuntuacionMaxima(puntajeMaximo, nombrePuntajeMaximo);
-                rlutil::locate(47,17);system("pause");
-                system("cls");
+                ImprimirPuntuacionMaxima(puntajeMaximo, nombrePuntajeMaximo, root);
             break;
 
             case 0:
@@ -41,7 +41,7 @@ int main(){
 
             default:
                 system("cls");
-                cout<<"Ingrese una opcion valida"<<endl;
+                rlutil::locate(54,16);cout<<"Ingrese una opcion valida"<<endl;
             break;
         }
     }
