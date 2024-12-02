@@ -17,6 +17,7 @@ void Jugar(string& nombrePuntajeMaximo, int opcionModo, bool modoSimulado, int& 
     int PuntajeTotalJugador1=0;
     int PuntajeTotalJugador2=0;
     int valorTirada=0;
+    int puntaje;
     const int TAM=6;
     int vDado[TAM]={};
     bool juegoTerminado = false;
@@ -108,9 +109,20 @@ void Jugar(string& nombrePuntajeMaximo, int opcionModo, bool modoSimulado, int& 
                 }
             }
 
-            valorTirada = calcPuntaje(vDado, TAM); // asigna el return de la funcion de puntaje a la variable valorTirada
-            if(valorTirada==0){  //Si (puntaje) valorTirada == 0 (sexteto), entonces resetea el puntaje total.
-                PuntajeTotalJugador1=0;
+            int puntaje = calcPuntaje(vDado,TAM, juegoTerminado);
+
+            if(puntaje>0 && puntaje<=6){ //Sexteto de X numero
+                NombreJugada(puntaje, TurnoJugador);
+                valorTirada = calcPuntaje(vDado,TAM, juegoTerminado);
+                valorTirada = valorTirada*10;
+            }
+            else if(puntaje>6){
+                NombreJugada(puntaje, TurnoJugador);
+                valorTirada = calcPuntaje(vDado,TAM, juegoTerminado);
+            }
+            else if (puntaje==-1){
+                NombreJugada(puntaje, TurnoJugador);
+                calcPuntaje(vDado,TAM, juegoTerminado=true);
             }
 
             if(valorTirada>PuntajeMaximoRonda){
@@ -145,8 +157,6 @@ void Jugar(string& nombrePuntajeMaximo, int opcionModo, bool modoSimulado, int& 
 
             mostrarDado(vDado,TAM);
             rlutil::resetColor();
-
-            juegoTerminado = NombreJugada(valorTirada, TurnoJugador);
 
             LanzamientoCont++;
 
@@ -201,7 +211,21 @@ void Jugar(string& nombrePuntajeMaximo, int opcionModo, bool modoSimulado, int& 
                 }
             }
 
-            valorTirada = calcPuntaje(vDado, TAM);
+            puntaje = calcPuntaje(vDado,TAM, juegoTerminado);
+
+            if(puntaje>0 && puntaje<=6){ //Sexteto de X numero
+                NombreJugada(puntaje, TurnoJugador);
+                valorTirada = calcPuntaje(vDado,TAM, juegoTerminado);
+                valorTirada = valorTirada*10;
+            }
+            else if(puntaje>6){
+                NombreJugada(puntaje, TurnoJugador);
+                valorTirada = calcPuntaje(vDado,TAM, juegoTerminado);
+            }
+            else if (puntaje==-1){
+                NombreJugada(puntaje, TurnoJugador);
+                calcPuntaje(vDado,TAM, juegoTerminado=true);
+            }
 
             if(valorTirada>PuntajeMaximoRonda){
                 PuntajeMaximoRonda = valorTirada;
@@ -243,8 +267,6 @@ void Jugar(string& nombrePuntajeMaximo, int opcionModo, bool modoSimulado, int& 
 
             mostrarDado(vDado,TAM);
             rlutil::resetColor();
-
-            juegoTerminado = NombreJugada(valorTirada, TurnoJugador);
 
             LanzamientoCont++;
 
@@ -347,6 +369,30 @@ void Jugar(string& nombrePuntajeMaximo, int opcionModo, bool modoSimulado, int& 
             }
         }
     }
+    else if(TurnoJugador==true && puntaje==-1){
+        for(int x=50;x<=90;x++){
+            rlutil::locate(x,12);
+            cout<<(char)205;
+        }
+        rlutil::locate(53,13);cout<<nombreJugador1<<" GANO EN "<<RondaCont<<" RONDAS POR ESCALERA"<<endl;
+        ImprimirPuntajeTotal(nombreJugador1, nombreJugador2, PuntajeTotalJugador1, PuntajeTotalJugador2, opcionModo);
+        for(int x2=50;x2<=90;x2++){
+            rlutil::locate(x2,16);
+            cout<<(char)205;
+        }
+    }
+    else{
+        for(int x=50;x<=90;x++){
+            rlutil::locate(x,12);
+            cout<<(char)205;
+        }
+        rlutil::locate(53,13);cout<<nombreJugador2<<" GANO EN "<<RondaCont<<" RONDAS POR ESCALERA"<<endl;
+        ImprimirPuntajeTotal(nombreJugador1, nombreJugador2, PuntajeTotalJugador1, PuntajeTotalJugador2, opcionModo);
+        for(int x2=50;x2<=90;x2++){
+            rlutil::locate(x2,16);
+            cout<<(char)205;
+        }
+    }
 
     if(PuntajeTotalJugador1 > PuntajeTotalJugador2 || valorTirada == -1){
         for(int x=50;x<=90;x++){
@@ -391,29 +437,22 @@ void Jugar(string& nombrePuntajeMaximo, int opcionModo, bool modoSimulado, int& 
 }
 
 //Imprime el puntaje en la interfaz
-bool NombreJugada(int puntaje, bool TurnoJugador){
-    bool juegoTerminado=false;
+void NombreJugada(int puntaje, bool TurnoJugador){
 
     if(puntaje == -1){//Si el return(puntaje) es -1 seria escalera.
         rlutil::locate(62,16);cout<<"ESCALERA, GANASTE!"<<endl;
-        rlutil::anykey();
-        juegoTerminado = true;
     }
     else if (puntaje == 0){//Si el return(puntaje) es 0, es un sexteto de 6.
         rlutil::locate(62,16);cout<<"Sexteto de 6. Puntaje a 0"<<endl;
     }
-
-    else if(puntaje >= 10 && puntaje % 10 == 0 && puntaje / 10 <= 6){
-        int numero=puntaje/10;
-        int valor=puntaje;
+    else if(puntaje >0 && puntaje <= 6){ // Si el puntaje es de 1 a 6 entonces devuelve sexteto
+        int numero=puntaje;
+        int valor=puntaje*10;
         rlutil::locate(62,16);cout<<"Sexteto de "<< numero<<": "<< valor << " puntos"<<endl;
     }
-    else{
-        cout<<endl;
+    else if (puntaje>6){
         rlutil::locate(62,16);cout<<"Suma de dados: "<< puntaje << " puntos" <<endl;
     }
-
-    return juegoTerminado;
 }
 
 //Funcion Turno
@@ -491,11 +530,10 @@ void ImprimirPuntajeTotal(string nombreJugador1, string nombreJugador2, int Punt
 }
 
 //Funcion calcular puntaje
-int calcPuntaje(int vDado[],int TAM){
+int calcPuntaje(int vDado[],int TAM, bool& juegoTerminado){
     int conteo[7]={0};
     int valorTirada = 0; // acumulador
     int puntaje=0; // Return de la funcion
-    int sexteto=0;
 
     //Recorre el vector y suma el total de sus valores [i]
     for(int i=0;i<TAM; i++){
@@ -510,7 +548,7 @@ int calcPuntaje(int vDado[],int TAM){
                 return puntaje=0;//si el sexteto son todos 6, devuelve 0
             }
             else{
-                return puntaje=i*10;//El puntaje del sexteto dentro de la funcion imprimirPuntaje
+                return puntaje=i;//sexteto de X numero
             }
         }
     }
@@ -524,6 +562,7 @@ int calcPuntaje(int vDado[],int TAM){
     }
     if(numerosDif == 6){//si 6 son diferentes, es escalera
         return puntaje =-1;//devulve escalera
+        juegoTerminado=true;
     }
     return valorTirada; //Si no se cumple ninguna de estas, devolver valor final
 }
