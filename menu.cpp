@@ -7,9 +7,16 @@
 using namespace std;
 
 int SalirJuego(){
-    system("cls");
-    cout<<"Gracias por jugar!"<<endl;
-    system("pause");
+    for(int x=50;x<=90;x++){
+        rlutil::locate(x,12);
+        cout<<(char)205;
+    }
+    rlutil::locate(61,14);cout<<"Gracias por jugar!"<<endl;
+    for(int x2=50;x2<=90;x2++){
+        rlutil::locate(x2,16);
+        cout<<(char)205;
+    }
+    rlutil::locate(53,17);system("pause");
     return 0;
 }
 //Funcion para mostrar el modo de juego
@@ -52,7 +59,7 @@ void ModoJuego(int& puntajeMaximo, string& nombrePuntajeMaximo){
 
             default:
                 system("cls");
-                rlutil::locate(54,16);cout<<"Ingrese una opcion valida"<<endl;
+                rlutil::locate(54,17);cout<<"Ingrese una opcion valida"<<endl;
             break;
         }
     }
