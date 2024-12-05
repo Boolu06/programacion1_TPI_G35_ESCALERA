@@ -101,7 +101,8 @@ void dibujarDado(int numero, int posx, int posy){
 void mostrarDado(int vDado[], int TAM){
     int i;
     for(i=1;i<=TAM;i++){
-        dibujarDado(vDado[i-1],rand()%10+1,i*4);
+        dibujarDado(vDado[i-1],rand()%10+5,i*4);
+        rlutil::msleep(30);
     }
 }
 
@@ -109,8 +110,18 @@ void mostrarDado(int vDado[], int TAM){
 void dadoManual (int vDado[], int TAM){
     cout<<"Ingrese los valores de los dados (1 - 6): "<< endl;
     for(int i=0; i < TAM; i++){
-        cout<<"Dado: "<< i + 1 <<" : "<< endl;
+        cout<<"Dado #"<< i + 1 <<" : ";
         cin>> vDado[i];
+
+        while(vDado[i]>6 || vDado[i]<1){
+            rlutil::setColor(rlutil::RED);
+            cout<<"Incorrecto: ingrese del 1 al 6"<<endl;
+            rlutil::setColor(rlutil::WHITE);
+            cout<<"Dado #"<< i + 1 <<" : ";
+            cin>>vDado[i];
+
+        }
+
     }
     system("cls");
 }

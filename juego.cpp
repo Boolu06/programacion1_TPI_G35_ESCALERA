@@ -136,14 +136,21 @@ void Jugar(string& nombrePuntajeMaximo, int opcionModo, bool modoSimulado, int& 
             rlutil::locate(50,14);cout<<"LANZAMIENTO NUMERO: "<<LanzamientoCont+1<<endl;
             rlutil::locate(51,15);cout<<"------------------------------------------------"<<endl;
             rlutil::locate(50,16);cout<<" "<<endl;
+            rlutil::locate(51,17);cout<<"------------------------------------------------"<<endl;
 
             //Mesa de timba
             for(int y=0;y<30;y++){
                 rlutil::saveDefaultColor();
                 rlutil::setColor(rlutil::BROWN);
                 rlutil::locate(31,y);
+                cout<<(char)204;
+                rlutil::locate(32,y);
                 cout<<(char)186;
-                for(int x=1;x<31;x++){
+                rlutil::locate(1,y);
+                cout<<(char)186;
+                rlutil::locate(2,y);
+                cout<<(char)185;
+                for(int x=3;x<31;x++){
                     rlutil::locate(x,y);
                     rlutil::setColor(rlutil::LIGHTGREEN);
                     rlutil::setBackgroundColor(rlutil::BLACK);
@@ -169,7 +176,6 @@ void Jugar(string& nombrePuntajeMaximo, int opcionModo, bool modoSimulado, int& 
             }
 
             cout<<endl;
-            rlutil::locate(51,17);cout<<"------------------------------------------------"<<endl;
             rlutil::locate(50,18);system("pause");
         }
 
@@ -251,8 +257,20 @@ void Jugar(string& nombrePuntajeMaximo, int opcionModo, bool modoSimulado, int& 
                 rlutil::saveDefaultColor();
                 rlutil::setColor(rlutil::BROWN);
                 rlutil::locate(31,y);
+                cout<<(char)204;
+                rlutil::saveDefaultColor();
+                rlutil::setColor(rlutil::BROWN);
+                rlutil::locate(32,y);
                 cout<<(char)186;
-                for(int x=1;x<31;x++){
+                rlutil::saveDefaultColor();
+                rlutil::setColor(rlutil::BROWN);
+                rlutil::locate(1,y);
+                cout<<(char)186;
+                rlutil::saveDefaultColor();
+                rlutil::setColor(rlutil::BROWN);
+                rlutil::locate(2,y);
+                cout<<(char)185;
+                for(int x=3;x<31;x++){
                     rlutil::locate(x,y);
                     rlutil::setColor(rlutil::LIGHTGREEN);
                     rlutil::setBackgroundColor(rlutil::BLACK);

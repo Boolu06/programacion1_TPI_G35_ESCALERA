@@ -28,13 +28,14 @@ void ModoJuego(int& puntajeMaximo, string& nombrePuntajeMaximo){
     do{
         rlutil::setBackgroundColor(rlutil::WHITE);
         rlutil::setColor(rlutil::BLACK);
-        rlutil::locate(53,11);cout<<"===Elija el modo de juego==="<<endl;
+        rlutil::locate(53,11);cout<<"===ELIJA EL MODO DE JUEGO==="<<endl;
         rlutil::resetColor();
         rlutil::locate(54,12);cout<<"1. Un jugador"<<endl;
         rlutil::locate(54,13);cout<<"2. Dos jugadores"<<endl;
         rlutil::locate(54,14);cout<<"3. Modo Simulado un jugador"<<endl;
         rlutil::locate(54,15);cout<<"4. Modo Simulado dos jugadores"<<endl;
-        rlutil::locate(54,16);cin>>opcionModo;
+        rlutil::locate(54,16);cout<<"5. Volver al menu principal"<<endl;
+        rlutil::locate(54,17);cin>>opcionModo;
 
         switch(opcionModo){
             case 1:
@@ -57,11 +58,20 @@ void ModoJuego(int& puntajeMaximo, string& nombrePuntajeMaximo){
                 Jugar(nombrePuntajeMaximo,opcionModo, true,puntajeMaximo);
             break;
 
+            case 5:
+                system("cls");
+                rlutil::locate(58,13);cout<<"Volviendo..."<<endl;
+                rlutil::msleep(500);
+                system("cls");
+
+            break;
+
             default:
                 system("cls");
-                rlutil::locate(54,17);cout<<"Ingrese una opcion valida"<<endl;
+                rlutil::locate(54,18);
+                rlutil::setColor(rlutil::RED);cout<<"Ingrese una opcion valida"<<endl;
             break;
         }
     }
-    while(opcionModo!=1 && opcionModo!=2 && opcionModo!=3 && opcionModo !=4);
+    while(opcionModo!=1 && opcionModo!=2 && opcionModo!=3 && opcionModo !=4 && opcionModo!=5);
 }

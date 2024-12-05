@@ -41,7 +41,9 @@ int main(){
 
             default:
                 system("cls");
-                rlutil::locate(54,16);cout<<"Ingrese una opcion valida"<<endl;
+                rlutil::locate(54,16);
+                rlutil::setColor(rlutil::RED);
+                cout<<"Ingrese una opcion valida"<<endl;
             break;
         }
     }
