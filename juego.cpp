@@ -283,7 +283,7 @@ void Jugar(string& nombrePuntajeMaximo, int opcionModo, bool modoSimulado, int& 
 
             LanzamientoCont++;
 
-            if(TurnoJugador==true){ //Desempate
+            if(TurnoJugador==true){ //Desempate por lanzamiento
                 if(PuntajeTotalJugador1+valorTirada>=100){
                     llegoacien=true;
                 }
@@ -429,6 +429,7 @@ void Jugar(string& nombrePuntajeMaximo, int opcionModo, bool modoSimulado, int& 
     rlutil::locate(53,19);system("pause");
     system("cls");
 
+    //ESTADISTICAS
     if(PuntajeTotalJugador1 > puntajeMaximo){
         puntajeMaximo = PuntajeTotalJugador1;
         nombrePuntajeMaximo = nombreJugador1;
@@ -473,7 +474,7 @@ void ImprimirTurnos(int Ronda, string nombreJugador1, int PuntajeTotalJugador1){
     }
 
     rlutil::locate(53,13);cout<<"RONDA NUMERO "<<Ronda;
-    rlutil::locate(53,14);cout<<"PROXIMO TURNO: "<<nombreJugador1;
+    //rlutil::locate(53,14);cout<<"PROXIMO TURNO: "<<nombreJugador1;
     rlutil::locate(53,15);cout<<"PUNTAJE DE "<<nombreJugador1<<": "<< PuntajeTotalJugador1;
 
     for(int x2=53;x2<=83;x2++){
